@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import mysettings
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +21,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '=vu8pbo=hu_*3)o7rimcc&d(q91q157w&2l#1++*m3^8owo_17'
+SECRET_KEY = mysettings.SECRET_KEY
+#'=vu8pbo=hu_*3)o7rimcc&d(q91q157w&2l#1++*m3^8owo_17'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -38,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'recommend',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +58,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'layout')], # create layout folder and build base.html
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,13 +77,20 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
+DATABASES = mysettings.DATABASES
+'''
+ {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': 'test',
+        'USER': 'root',
+        'PASSWORD':'123',
+        'HOST': 'localhost',
+        'PORT': '3306',
+
     }
 }
-
+'''
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -119,3 +129,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# need it? cause there is no function that user upload system.
+MEDIA_URL = '/res/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# for successfully log in
+LOGIN_REDIRECT_URL = '/'

@@ -1,8 +1,9 @@
+from .cal_knn import Cal_Knn
 from django.contrib import messages
 from django.db.models import fields
 from django.http.response import HttpResponseRedirect
 from django.views.generic.base import View
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import DeleteView, UpdateView
 from .models import Travel, Treview, Tuser
 from django.shortcuts import redirect, render
 from django.views.generic.list import ListView
@@ -25,7 +26,7 @@ showme()
 # 첫화면에 띄울 거, best.html
 class Top5Site(ListView):
     model = Travel
-    template_name_suffix = 'best.html'
+    template_name_suffix = '_best'
 
 
 #signup 은 accounts 쪽으로 넣고
@@ -70,7 +71,21 @@ class ReviewUpdate(UpdateView):
         else:
             return super(ReviewUpdate, self).dispatch(request, *args, **kwargs)
 
-# review delete
+class ReviewDelete(DeleteView):
+    model = Treview
+    template_name_suffix = 'review_delete.html'
+    success_url = '/'
+
+    def dispatch(self, request, *args, **kwargs):
+        object = self.get_object()
+
+        if object.author != request.treview_id:
+            messages.warning(request, "권한이 없습니다.")
+            return HttpResponseRedirect('/')
+        else:
+            return super(ReviewDelete, self).dispatch(request, *args, **kwargs)
+
+  
 # 흠...
 # 계산용 search 로 만들고
 # knn/ svm
@@ -92,6 +107,24 @@ class ReviewUpdate(UpdateView):
 # 사실은 여기다가 모든 거 다 예약할 수 있게 더 하면 좋은데
 # 이건 뭐 그냥 내 욕심
 # admin 페이지에서 travel 업데이트 하도록 해야하
+
+def calculate(request):
+    # 여기서 request.user_id 받아서 tuser.user_id 랑 같은 지 비교해보고 is_valid()로 
+    # kal knn/ svm / 
+    
+    results = Cal_Knn(request)
+    print(results[0]['iid'].values)    
+    tlist = results[0]['iid'].values
+        
+    flist = []
+    for f in tlist :
+        tour = Travel.objects.filter(placeId = f)
+        flist.append(" ".join(tour))
+    print(flist)
+        
+
+    return render(request, 'calculate.html', {'tour':flist})
+
 class CalculateReview(View):
     # Rmodel = Treview
     # Umodel = Tuser
@@ -102,7 +135,7 @@ class CalculateReview(View):
     template_name_suffix = 'calculate.html'
     
     # 얘를 여기다가 넣을게 있을까...?
-    # 그냥 계산하는 거니까 굳ㄹ이....????
+    # 그냥 계산하는 거니까 굳이....????
     #def cal_knn(self, request):
         #다른 거 굳이 넣을 필요있남?
         #request.tourid = self.

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}    best
+{% endblock %}
+
+{% block body  %}
+
+<h2>this page is for best 5 travel site! 
+will be updated</h2>
+
+
+	<form action="search" method="post">{% csrf_token %}
+	<div id='search-box'>
+		<input type="text" id='search' name='search' placeholder="검색어를 입력하세요.">   
+		<button type="submit" id='search-icon'>
+			
+            <!--
+            <img src="./static/image/search.png" style="width: 30px; height: 30px;">
+            -->
+        </button>
+	</div>
+	<br><br>
+	 
+	<input type='date' id='start_date' name='start_date'/>
+	~
+	<input type='date' id='end_date' name='end_date'/>
+	<br><br>
+	 
+	</form>
+</div>
+
+
+<div id='contents'>
+	<!-- 날씨 -->
+	<div id='weather'>
+	{% if weather %}
+		
+		<span><b style="color: blue;">{{start}} ~ {{end}} 날씨  →</b> 
+		{% for w in weather %}
+			<b style="color: red;">{{w}} </b>/ 
+		{% endfor %}
+		</span>
+	{% else %}
+		<h4>날짜를 설정해야 날씨가 보입니다.</h4>
+	{% endif %}
+	</div>
+	
+	<!-- 여행지 -->
+	<div id='tour-recommend'>
+	{% if tour %}
+		<h3>여행지 추천</h3>
+		{% for t in tour %}
+			<div class="card card-3">
+				{{t}}
+			<input type = 'hidden' id = 'txtArea{{forloop.counter}}' value = '{{t}}'/>
+			<button type = 'button' class="btn btn-outline-secondary" id = 'btn{{forloop.counter}}'>장르기반</button>
+			<button type = 'button' class="btn btn-outline-secondary"  id = 'btn_{{forloop.counter}}'>장소기반</button>
+			</div>
+			<div id = 'showData{{forloop.counter}}'  style = 'text-align: left; padding-left: 20px;'></div>
+		{% endfor %}
+	{% else %}
+		<h3>검색 결과가 없습니다.</h3>
+	{% endif %}
+
+
+
+{% endblock  %}

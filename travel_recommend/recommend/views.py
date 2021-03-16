@@ -1,3 +1,4 @@
+from .weather import Weather
 from .cal_knn import Cal_Knn
 from django.contrib import messages
 from django.db.models import fields
@@ -8,14 +9,7 @@ from .models import Travel, Treview, Tuser
 from django.shortcuts import redirect, render
 from django.views.generic.list import ListView
 
-
-# Create your views here.
-def showme(*args):
-    rate = Tuser.objects.all()
-    print(rate)
-
-showme()
-
+print('views 실행')
 # function and class 
 '''
 1. first page ( best? popular 5)
@@ -85,13 +79,10 @@ class ReviewDelete(DeleteView):
         else:
             return super(ReviewDelete, self).dispatch(request, *args, **kwargs)
 
-  
-# 흠...
-# 계산용 search 로 만들고
-# knn/ svm
-# 또 뭐가 있남...CNN도 값을 더주고 하면 될 거 같기는 한데...
 
-# 얘는 그냥 펑션으로만 해야겠는데...? 이게 되나?
+# 처음 가입시에는 레이팅(별점)을 줄 수 있도록 하고, 본인이 다녀온 여행지에 대해서는 리뷰를 쓰게 하기 => 리뷰쓴 거를 보고 다른 사람이 다녀오면 혜택
+# 리뷰에 연동되어있는 상품을 선택한 여행자에게는 할인 혜택
+# 이런식으로 서로에게 혜택을 줄 수 있도록 만들면 되게ㅐㅆ다~ 좋다좋아...
 
 # 검색 할 때는, 유저들 위주로 보여주고, if 문으로 로그인이 된(회원이면, 본인 리뷰 쓴 거 기반으로 보여주면 되니가)
 # 아닌 경우에는 검색할 때, 가장 많은 유저들이 방문한 장소를 보여주면 되지 않을까?
@@ -102,15 +93,75 @@ class ReviewDelete(DeleteView):
 # 그래서 안될 거 같은데...?
 # city가 도시가 아니라 도, 행정구역 구분인데, 흠... 
 # 아니면 아예 로그인 안한 상태에서는 검색 창이 안보이고
-# 그냥 그런 거지, 도 별로 버튼 누를 수 있게 해두고, 베스트 여행지만 누를 수 있도록 하는거, 이거는 회원한테도 보이게 해도 상관없겠다.
+
+# 도 별로 버튼 누를 수 있게 해두고, 베스트 여행지만 누를 수 있도록 하는거, 이거는 회원한테도 보이게 해도 상관없겠다.
 # 그냥 그거를 메인 페이지에 넣으면 되겠다.
 # 사실은 여기다가 모든 거 다 예약할 수 있게 더 하면 좋은데
-# 이건 뭐 그냥 내 욕심
+
 # admin 페이지에서 travel 업데이트 하도록 해야하
+
+
+# weather
+def weather(request):
+    if request.method == 'POST':
+        search = request.POST.get('search')
+        start_date = request.POST.get('start_date')
+        end_date = request.POST.get('end_date')
+
+    if start_date == '':
+        start_date = None
+        weather = ''
+    if end_date == '':
+        end_date = None
+        weather = ''
+        
+    wlist = []
+    # 날씨 출력    
+    try:
+        weather = Weather(search)
+        query = (weather['date'] >= start_date) & (weather['date'] <= end_date)
+        for i in range(len(weather.loc[query]['weather'].values)):
+            w = weather.loc[query]['weather'].values[i]
+            if (w >= 1 and w <= 3) or (w >= 33 and w <= 35):
+                w = '맑음'
+            elif (w >= 4 and w <= 5) or (w >= 36 and w <= 37):
+                w = '구름 조금'
+            elif (w >= 6 and w <= 8) or (w == 38):
+                w = '흐림'
+            elif (w == 11):
+                w = '안개'
+            elif (w == 12 or w == 13):
+                w = '소나기'
+            elif (w >= 14 and w <= 17) or (w == 39):
+                if (w == 15 or w == 16) or (w == 41 or w == 42):
+                    w = '천둥번개와 비'
+                w = '한때 비'
+            elif w == 18 and w <= 40:
+                if (w >= 19 and w <= 21) or (w == 32):
+                    w = '강풍'
+                elif(w == 23 or w == 24) or (w == 29) or (w == 43 or w == 44):
+                    w = '눈'
+                elif(w == 25):
+                    w = '진눈깨비'
+                elif(w == 26):
+                    w = '얼어붙은 비'
+                w = '비'
+            elif w == 30:
+                w = '뜨거움 - 주의'
+            elif w == 31:
+                w = '추움 - 주의'
+            wlist.append(w)
+        print(wlist)   
+    except: 
+        print('===날짜가 없을경우===')
+
+
+
+
 
 def calculate(request):
     # 여기서 request.user_id 받아서 tuser.user_id 랑 같은 지 비교해보고 is_valid()로 
-    # kal knn/ svm / 
+    # cal knn/ svm / cnn - treview 에 컬럼 추가(장르, 나이?, )해서 conv 진행하면 될 듯?
     
     results = Cal_Knn(request)
     print(results[0]['iid'].values)    

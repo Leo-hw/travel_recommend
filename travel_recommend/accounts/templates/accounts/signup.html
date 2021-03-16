@@ -1,0 +1,55 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+    
+<div class="row">
+	<div class="col"></div>
+	<div class="col-6">
+		<form action="" method="post">
+			<div class="alert alert-info">Please enter your account information</div>
+			
+			{% csrf_token %}
+			<label> User Name : <input type="text" name="username"></label>
+			<label> Password : <input type="password" name="password"></label>
+			<label> Password check : <input type="password" name="repeat_password"></label>
+			<label> E-mail : <input type="text" name="email"></label>
+			<!-- travel_site_name to get travel_id -->
+                      
+            <!-- 여기서 뿌릴 떄도 셀렉트 버튼으로 해야하니까 데이터불러와서 보여주기
+            select city / select towwn/ select travel_site 
+            minimum 3 select / can put a button for more selection
+            -->
+            <label> town: 
+            {% for f in tlist %}
+                <select name = 'town'>
+                <option value='{{ f }}'> {{f}}</option>
+            {% endfor %}
+
+            <label> : city
+            {% if town in tlist  %}
+                {% for c in clist %}
+                    <select name = 'city'>
+                    <option value='{{ c }}'> {{c}}</option>
+                {% endfor %}
+            {% endif %}
+
+
+            <label> travel_site: 
+            could be the one? THAT I DREAMED?
+            just wannna be, don't know can't be or can be
+            {% if city in clist  %}
+                {% for t in tlist %}
+                    <select name = 'travel_site'>
+                    <option value='{{ t }}'> {{t}}</option>
+                {% endfor %}
+            {% endif %}
+
+
+            <div class="col"></div>
+			<input type="submit" value="Sign up" class="btn btn-primary" style="margin: auto; text-align: center;" >
+		</form>
+	</div>
+	<div class="col"></div>
+</div>
+
+{% endblock %}

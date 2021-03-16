@@ -10,28 +10,16 @@ from django.shortcuts import redirect, render
 from django.views.generic.list import ListView
 
 print('views 실행')
-# function and class 
-'''
-1. first page ( best? popular 5)
-2. search
-3. 
-'''
 
-# 첫화면에 띄울 거, best.html
+# first page(index)
 class Top5Site(ListView):
     model = Travel
     template_name_suffix = '_best'
 
+# make detail function 
 
-#signup 은 accounts 쪽으로 넣고
-# 여기는 계산하는 거랑 날씨 불러오기
-#로그아웃 로그인은 장고 기본으로 사용
-# 디테일 눌렀을 때, 흠... 가져와서 보여주기
-
-# 회원 가입시 리뷰 기본적으로 설정하도록 하고 - 선택적으로 할 수 있게
-# 만약에 리뷰를 안하면, best 여행지만 show하고
-
-# 리뷰 추가 기능
+# 회원 가입시 리뷰 - 기본적으로 3~5 곳 설정 - 선택적으로 
+# 리뷰를 안하면, best 여행지만 show하고
 
 from django.views.generic import CreateView
 class ReviewCreate(CreateView):
@@ -56,7 +44,7 @@ class ReviewUpdate(UpdateView):
     def dispatch(self, request, *args, **kwargs):
         object = self.get_object()
 
-        # 여기 author 를 잘못된 거 같은데....?
+        # 여기 author 확인 필요
         # 일단 여기부분은 django documentation 확인이 필요.
         
         if object.author != request.treview_id:
@@ -97,8 +85,6 @@ class ReviewDelete(DeleteView):
 # 도 별로 버튼 누를 수 있게 해두고, 베스트 여행지만 누를 수 있도록 하는거, 이거는 회원한테도 보이게 해도 상관없겠다.
 # 그냥 그거를 메인 페이지에 넣으면 되겠다.
 # 사실은 여기다가 모든 거 다 예약할 수 있게 더 하면 좋은데
-
-# admin 페이지에서 travel 업데이트 하도록 해야하
 
 
 # weather

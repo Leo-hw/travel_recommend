@@ -77,6 +77,7 @@ class ReviewDelete(DeleteView):
 # 도시를 일단 입력하면 도시는 있으니,까, 도시 내에서 가장 방문수가 많은 곳으로 가면 되겠지.
 # 아 근데 이러면 오래 걸리잖아....???????? visit_count 컬럼도 하나 만들어서 방문수도 넣어야하나....?
 # city town 나오는데...?
+
 # 이렇게 하면, 자료가 적어서 town (도시)로 했는데, 자료갯수가 적다.
 # 그래서 안될 거 같은데...?
 # city가 도시가 아니라 도, 행정구역 구분인데, 흠... 
@@ -141,10 +142,7 @@ def weather(request):
     except: 
         print('===날짜가 없을경우===')
 
-
-
-
-
+# 계산
 def calculate(request):
     # 여기서 request.user_id 받아서 tuser.user_id 랑 같은 지 비교해보고 is_valid()로 
     # cal knn/ svm / cnn - treview 에 컬럼 추가(장르, 나이?, )해서 conv 진행하면 될 듯?
@@ -158,7 +156,6 @@ def calculate(request):
         tour = Travel.objects.filter(placeId = f)
         flist.append(" ".join(tour))
     print(flist)
-        
 
     return render(request, 'calculate.html', {'tour':flist})
 

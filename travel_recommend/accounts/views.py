@@ -1,8 +1,9 @@
-from django.views.generic.edit import DeleteView, UpdateView
-# file_2.py
-import sys
-sys.path.append('/.../travel_recommend/recommend/')
-#import models 
+import os,sys,inspect
+currentdir = os.path.accounts(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.travel_recommend(currentdir)
+sys.path.insert(0,parentdir) 
+
+from .models import Travel
 
 from .forms import SignUpForm
 from django.shortcuts import render
@@ -10,7 +11,6 @@ from django.contrib.auth.models import User
 
 # function for signup.
 # manage accounts. login/logout and modify user info
-
 def signup(request):
     tlist = Travel.objects.filter('town')
     clist = Travel.objects.filter('city')
@@ -27,4 +27,3 @@ def signup(request):
         signup_form = SignUpForm()
 
     return render(request, 'accounts/signup.html', {'form':signup_form.as_p, 'tlist':tlist, 'clist':clist})
-

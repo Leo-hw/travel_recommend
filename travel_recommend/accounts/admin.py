@@ -1,4 +1,4 @@
-from ..recommend.models import Travel, Treview
+from ...travel_recommend.recommend.models import Travel, Treview
 from django.contrib import admin
 
 # Register your models here.

@@ -1,9 +1,11 @@
+from django.db.models.base import Model
+from recommend.models import Travel
 from django.contrib.auth.models import User
 from django import forms
 
 
 class SignUpForm(forms.ModelForm):
-    
+    Model = Travel
     password = forms.CharField(label = 'password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='password2', widget=forms.PasswordInput)
     rating = forms.CharField(label='rating', widget=forms.TextInput)

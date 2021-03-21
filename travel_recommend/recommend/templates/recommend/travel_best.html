@@ -4,22 +4,19 @@
 {% endblock %}
 
 {% block content  %}
-
-<h2>this page is for best 5 travel site! 
-will be updated</h2>
-
-
 	<form action="search" method="post">{% csrf_token %}
 	<div id='search-box'>
-		<input type="text" id='search' name='search' placeholder="검색어를 입력하세요.">   
+		<input type="text" id='search' name='search' placeholder="검색어를 입력하세요." style="align:center">   
+		<button type = "submit"> search </button>
+
+		<!--
 		<button type="submit" id='search-icon'>
-			
-            <!--
-            <img src="./static/image/search.png" style="width: 30px; height: 30px;">
-            -->
+			<img src="./static/image/search.png" style="width: 30px; height: 30px;">
         </button>
+		-->
 	</div>
-	<br><br>
+	<br>
+	
 	 
 	<input type='date' id='start_date' name='start_date'/>
 	~
@@ -28,8 +25,12 @@ will be updated</h2>
 	 
 	</form>
 </div>
-
-
+<br>
+<div class = "row">
+	<div class = "col">
+			<p>
+	</div>
+</div>
 <div id='contents'>
 	<!-- 날씨 -->
 	<div id='weather'>
@@ -44,6 +45,7 @@ will be updated</h2>
 		<h4>날짜를 설정해야 날씨가 보입니다.</h4>
 	{% endif %}
 	</div>
+	<br>
 	
 	<!-- 여행지 -->
 	<div id='tour-recommend'>

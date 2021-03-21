@@ -6,8 +6,8 @@ print('urls실행')
 urlpatterns = [
     
     path('', Top5Site.as_view(), name = 'index'),
-    path('reviewcreate/', ReviewCreate.as_view(), name = 'reviewcreate'),
-    path('reviewdelete/', ReviewDelete.as_view(), name = 'reviewdelete'),
+    path('reviewcreate/', ReviewCreate.as_view(), name = 'create'),
+    path('reviewdelete/', ReviewDelete.as_view(), name = 'delete'),
 
 
 ]

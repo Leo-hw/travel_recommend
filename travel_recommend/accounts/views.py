@@ -8,7 +8,6 @@ from django.contrib.auth.models import User
 
 # function for signup.
 # manage accounts. login/logout and modify user info
-
 def signup(request):
     # 여기서 select 박스에 넣을 내용 미리 읽어서 보내기.    
     tlist = Travel.objects.filter('town')
@@ -26,4 +25,3 @@ def signup(request):
         signup_form = SignUpForm()
 
     return render(request, 'accounts/signup.html', {'form':signup_form.as_p, 'tlist':tlist, 'clist':clist})
-

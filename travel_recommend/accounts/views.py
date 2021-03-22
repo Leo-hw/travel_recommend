@@ -11,8 +11,8 @@ def signup(request):
     # 여기서 select 박스에 넣을 내용 미리 읽어서 보내기.    
     if request.method == 'POST':
         signup_form = SignUpForm(request.POST)
-        tlist = Travel.objects.filter('town')
-        clist = Travel.objects.filter('city')
+        # tlist = Travel.objects.filter('town')
+        # clist = Travel.objects.filter('city')
         
         if signup_form.is_valid():
             user_instance = signup_form.save(commit = False)
@@ -24,7 +24,7 @@ def signup(request):
 
     else:
         signup_form = SignUpForm()
-        tlist = Travel.objects.filter('town')
-        clist = Travel.objects.filter('city')
+        # tlist = Travel.objects.filter('town')
+        # clist = Travel.objects.filter('city')
 
-    return render(request, 'accounts/signup.html', {'form':signup_form.as_p, 'tlist':tlist, 'clist':clist})
+    return render(request, 'accounts/signup.html', {'form':signup_form.as_p})

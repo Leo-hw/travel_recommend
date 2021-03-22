@@ -1,20 +1,41 @@
-from django.db.models.base import Model
 from recommend.models import Travel
 from django.contrib.auth.models import User
 from django import forms
 
 
 class SignUpForm(forms.ModelForm):
-    Model = Travel
-    password = forms.CharField(label = 'password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='password2', widget=forms.PasswordInput)
-    rating = forms.CharField(label='rating', widget=forms.TextInput)
-    travel_id = forms.CharField(label = 'travel_id', widget=forms.TextInput)
+    model = Travel
+    password = forms.CharField(label = 'password', widget=forms.PasswordInput, required= True)
+    password2 = forms.CharField(label='password2', widget=forms.PasswordInput, required= True)
+    rating = forms.DecimalField(label='rating', required = True, widget=forms.Select(
+        attrs={
+            "placeholder": "select",
+            "values":{1,2,3,4,5},
+        }
+    ))
+    #travel_id = forms.CharField(label = 'travel_id', widget=forms.TextInput)
+    city = forms.CharField(label = 'city', widget=forms.Select(
+        attrs={
+            "placeholder": "select",
+            "values":{1,2,3,4,5},
+            }))
+    town = forms.CharField(label = 'town', widget=forms.Select)
+    travel_name = forms.CharField(label = 'travel_name', widget=forms.Select(
+        attrs={
+            "placeholder": "select",
+            "values":{1,2,3,4,5},
+            
+        }
+
+    ))
+
+
     class Meta:
         model = User
+        
         # fill out fields with values for signup
         # can be added another field
-        fields = ['username', 'password','password2', 'first_name', 'last_name', 'email', 'rating', 'travel_id']
+        fields = ['username', 'password','password2', 'first_name', 'last_name', 'email', 'rating', 'city', 'town']
 
     def clean_Repeat_password(self):
         cd = self.cleaned_data

@@ -11,20 +11,41 @@ def signup(request):
     # 여기서 select 박스에 넣을 내용 미리 읽어서 보내기.    
     if request.method == 'POST':
         signup_form = SignUpForm(request.POST)
-        # tlist = Travel.objects.filter('town')
-        # clist = Travel.objects.filter('city')
         
         if signup_form.is_valid():
             user_instance = signup_form.save(commit = False)
-            
             user_instance.set_password(signup_form.cleaned_data['password'])
-            
             user_instance.save()
             return render(request, 'accounts/singup_complete.html', {'username':user_instance.username})
 
     else:
         signup_form = SignUpForm()
-        # tlist = Travel.objects.filter('town')
-        # clist = Travel.objects.filter('city')
-
+        
     return render(request, 'accounts/signup.html', {'form':signup_form.as_p})
+
+
+'''
+from django.shortcuts import render
+from django.http import JsonResponse
+from .models import University
+
+def university_list(request):
+    queryset = University.objects.all()
+    query = request.GET.get('q')
+    queryset = queryset.filter(name__icontains=query)
+    results = [
+        {
+            'id': university.id,
+            'text': university.name,
+        } for university in queryset
+    ]
+
+    data = {
+        'results': results,
+    }
+
+    return JsonResponse(
+        data,    
+        json_dumps_params = {'ensure_ascii': False}
+    )
+'''

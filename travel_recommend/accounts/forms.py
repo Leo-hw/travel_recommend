@@ -1,18 +1,13 @@
 from recommend.models import Travel
 from django.contrib.auth.models import User
 from django import forms
-
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 class SignUpForm(forms.ModelForm):
     model = Travel
     password = forms.CharField(label = 'password', widget=forms.PasswordInput, required= True)
     password2 = forms.CharField(label='password2', widget=forms.PasswordInput, required= True)
-    rating = forms.DecimalField(label='rating', required = True, widget=forms.Select(
-        attrs={
-            "placeholder": "select",
-            "values":{1,2,3,4,5},
-        }
-    ))
+    rating = forms.IntegerField(label='rating', required = True, validators=[MinValueValidator(1), MaxValueValidator(5)])
     #travel_id = forms.CharField(label = 'travel_id', widget=forms.TextInput)
     city = forms.CharField(label = 'city', widget=forms.Select(
         attrs={
@@ -35,7 +30,11 @@ class SignUpForm(forms.ModelForm):
         
         # fill out fields with values for signup
         # can be added another field
-        fields = ['username', 'password','password2', 'first_name', 'last_name', 'email', 'rating', 'city', 'town']
+        #fields = ['username', 'password','password2', 'first_name', 'last_name', 'email', 'rating', 'city', 'town']
+        fields = '__all__'
+        # widgets = {
+        #     'rating': starWidget,
+        # }
 
     def clean_Repeat_password(self):
         cd = self.cleaned_data

@@ -5,12 +5,11 @@ module.function()
 '''
 from recommend.models import Travel, Treview
 from django.contrib import admin
-#from .models import Question
+from .forms import SignUpForm
 
 class ChoiceInline(admin.StackedInline):
     model = Travel
     extra = 3
-
 
 class ReviewAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -20,3 +19,8 @@ class ReviewAdmin(admin.ModelAdmin):
     ]
 
 admin.site.register(Treview, ReviewAdmin)
+
+@admin.register(Travel)
+class StarAdmin(admin.ModelAdmin):
+    form = SignUpForm
+

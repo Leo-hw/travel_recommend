@@ -13,15 +13,13 @@
 			<label> Password : &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <input type="password" name="password"></label><br>
 			<label> Password check : <input type="password" name="repeat_password"></label><br>
+            <label> Name : <input type="text" name="name"></label><br>
 			<label> E-mail : <input type="text" name="email"></label><br>
-            
-			<!-- travel_site_name to get travel_id 
-            minimum 3 select / can put a button for more selection
-            -->
+            <!-- town / city / site -->
             <label> town : 
                 <select name = "town">
-                    {% for town in form %}
-                        <option value='{{ town }}'> {{town}}</option>
+                    {% for t in form.town %}
+                        <option value='{{ t }}'> {{t}}</option>
                     {% endfor %}
                 </select>
             </label><br>
@@ -38,8 +36,6 @@
             </label><br>
 
             <label> travel_site: 
-            could be the one? THAT I DREAMED?
-            just wannna be, don't know can't be or can be
             {% if city in clist  %}
                 {% for t in tlist %}
                     <select name = 'travel_site'>

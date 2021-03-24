@@ -19,33 +19,7 @@ def signup(request):
             return render(request, 'accounts/singup_complete.html', {'username':user_instance.username})
 
     else:
-        signup_form = SignUpForm()
+        signup_form = SignUpForm() 
         
     return render(request, 'accounts/signup.html', {'form':signup_form.as_p})
 
-
-'''
-from django.shortcuts import render
-from django.http import JsonResponse
-from .models import University
-
-def university_list(request):
-    queryset = University.objects.all()
-    query = request.GET.get('q')
-    queryset = queryset.filter(name__icontains=query)
-    results = [
-        {
-            'id': university.id,
-            'text': university.name,
-        } for university in queryset
-    ]
-
-    data = {
-        'results': results,
-    }
-
-    return JsonResponse(
-        data,    
-        json_dumps_params = {'ensure_ascii': False}
-    )
-'''

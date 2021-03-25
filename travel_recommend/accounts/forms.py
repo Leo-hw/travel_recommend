@@ -1,3 +1,4 @@
+from .widgets import starWidget
 from django import forms
 from recommend.models import Travel
 from django.contrib.auth.models import User
@@ -14,7 +15,7 @@ class SignUpForm(forms.ModelForm):
     city = forms.CharField(label = 'city', widget=forms.Select(
         attrs={
             "placeholder": "select",
-            "values": Travel.objects.get(filter='city'),
+           
             }))
     town = forms.CharField(label = 'town', widget=forms.Select)
     travel_name = forms.CharField(label = 'travel_name', widget=forms.Select(
@@ -44,4 +45,5 @@ class SignUpForm(forms.ModelForm):
         return cd['repeat_password']
 
 
-
+# 평점용
+ 

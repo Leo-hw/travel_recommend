@@ -4,11 +4,16 @@
 {% endblock %}
 
 {% block content  %}
-	<form action="search" method="post">{% csrf_token %}
+	<form action="search/" method="post">{% csrf_token %}
 	<div id='search-box'>
+	{% if user.is_authenticated %}
 		<input type="text" id='search' name='search' placeholder="검색어를 입력하세요." style="align:center">   
 		<button type = "submit"> search </button>
-
+	{% else %}
+		<div class = 'row'>
+			<div class = 'row'></div>
+		</div>
+	{% endif %}
 		<!--
 		<button type="submit" id='search-icon'>
 			<img src="./static/image/search.png" style="width: 30px; height: 30px;">
@@ -17,12 +22,15 @@
 	</div>
 	<br>
 	
-	 
-	<input type='date' id='start_date' name='start_date'/>
-	~
-	<input type='date' id='end_date' name='end_date'/>
-	<br><br>
-	 
+	{% if user.is_authenticated %}
+		<input type='date' id='start_date' name='start_date'/>
+		&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;
+		<input type='date' id='end_date' name='end_date'/>
+		<br><br>
+	{% else %}
+		<input type = 'hidden' id = 'justforuser'>
+		<br><br>
+	 {% endif %}
 	</form> 
 </div>
 <br>

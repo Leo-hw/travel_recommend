@@ -84,9 +84,6 @@ class ReviewDelete(DeleteView):
 # 아니면 아예 로그인 안한 상태에서는 검색 창이 안보이고
 
 # 도 별로 버튼 누를 수 있게 해두고, 베스트 여행지만 누를 수 있도록 하는거, 이거는 회원한테도 보이게 해도 상관없겠다.
-# 그냥 그거를 메인 페이지에 넣으면 되겠다.
-# 사실은 여기다가 모든 거 다 예약할 수 있게 더 하면 좋은데
-
 
 # weather
 def weather(request):
@@ -103,7 +100,7 @@ def weather(request):
         weather = ''
         
     wlist = []
-    # 날씨 출력    
+    # 날씨 출력  // 이거 수정해야한다던데..
     try:
         weather = Weather(search)
         query = (weather['date'] >= start_date) & (weather['date'] <= end_date)
@@ -143,11 +140,9 @@ def weather(request):
         print('===날짜가 없을경우===')
 
 # 계산
-def calculate(request):
-    # 여기서 request.user_id 받아서 tuser.user_id 랑 같은 지 비교해보고 is_valid()로 
-    # cal knn/ svm / cnn - treview 에 컬럼 추가(장르, 나이?, )해서 conv 진행하면 될 듯?
-    
-    results = Cal_Knn(request)
+def search(request):
+    user_id = request.user.id
+    results = Cal_Knn(user_id)
     print(results[0]['iid'].values)    
     tlist = results[0]['iid'].values
         
@@ -155,24 +150,7 @@ def calculate(request):
     for f in tlist :
         tour = Travel.objects.filter(placeId = f)
         flist.append(" ".join(tour))
-    print(flist)
-
-    return render(request, 'calculate.html', {'tour':flist})
-
-class CalculateReview(View):
-    # Rmodel = Treview
-    # Umodel = Tuser
-    # Tmodel = Travel
-
-    
-    model = Treview
-    template_name_suffix = 'calculate.html'
-    
-    # 얘를 여기다가 넣을게 있을까...?
-    # 그냥 계산하는 거니까 굳이....????
-    #def cal_knn(self, request):
-        #다른 거 굳이 넣을 필요있남?
-        #request.tourid = self.
-
-
+    print(type(flist))
+    context = {'tour':flist}
+    return render(request, 'search.html', context)
 

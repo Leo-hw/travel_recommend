@@ -8,37 +8,35 @@ import surprise
 import os
 from .models import Treview
 
-path = os.getcwd()
-print(path)
-
-#filepath = path + '\travel_recommend\travel\static\datafile\placerating.csv'
-#user_id = 
 
 def Cal_Knn(user_id):
     results =[]
     
+    '''
+    qs = SomeModel.objects.select_related().filter(date__year=2012)
+    q = qs.values('date', 'OtherField')
+    df = pd.DataFrame.from_records(q)
+    '''
+    
     # 1. raw dataset
-    #rating = pd.read_csv(filepath)
     rate  = Treview.objects.all()
-    rates = []
-    for r in rate:
-        rates.append(r)
-
-    rating = pd.DataFrame(rates)
-     
+    rates = rate.values('treview_no', 'treview_id', 'tourId', 'rating')
+    
+    #rating = pd.DataFrame(data = rate, columns=['treview_no', 'treview_id', 'tourId', 'rating'])
+    rating = pd.DataFrame.from_records(rates) 
     rating.head()   #   critic(user)   title(item)   rating
     
     print(user_id)
-    rating['userId'].value_counts()
-    rating['placeId'].value_counts()
+    rating['treview_id'].value_counts()
+    rating['tourId'].value_counts()
     
     # 관광 vs 미관광
-    tab = pd.crosstab(rating['userId'], rating['placeId'])
+    tab = pd.crosstab(rating['treview_id'], rating['tourId'])
     #print(tab)
     
     # rating
     # 두 개의 집단변수를 가지고 나머지 rating을 그룹화
-    rating_g = rating.groupby(['userId', 'placeId'])
+    rating_g = rating.groupby(['treview_id', 'tourId'])
     rating_g.sum()
     tab = rating_g.sum().unstack() # 행렬구조로 변환
     #사용자 2이 가지 않은 곳, 1,15, 39....
@@ -60,7 +58,7 @@ def Cal_Knn(user_id):
     
     # 5. user_id 입력
     #user_id = 1 # 추천대상자
-    item_ids = range(0, 2106) # placeId 범위
+    item_ids = range(0, 2106) # tourId 범위
     actual_rating = 0 # 평점
     
     predict_result = []

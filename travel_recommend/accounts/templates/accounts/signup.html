@@ -15,7 +15,19 @@
 			<label> Password check : <input type="password" name="repeat_password"></label><br>
             <label> Name : <input type="text" name="name"></label><br>
 			<label> E-mail : <input type="text" name="email"></label><br>
-            <!-- town / city / site -->
+            <!-- city / town / site -->
+            
+            <label> city :
+                <select name = 'city'>
+                
+                {% for c in form.city %}
+                    <option value='{{ c }}'> {{c}}</option>
+                {% endfor %}
+                </select>
+            </label><br>
+
+
+
             <label> town : 
                 <select name = "town">
                     {% for t in form.town %}
@@ -24,17 +36,7 @@
                 </select>
             </label><br>
             
-            <label> city :
-            {% if town in tlist  %}
-                {% for c in clist %}
-                    <select name = 'city'>
-                    <option value='{{ c }}'> {{c}}</option>
-                    
-                {% endfor %}
-                </select>
-            {% endif %}
-            </label><br>
-
+            
             <label> travel_site: 
             {% if city in clist  %}
                 {% for t in tlist %}

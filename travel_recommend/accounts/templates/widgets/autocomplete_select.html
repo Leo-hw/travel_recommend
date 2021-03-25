@@ -1,0 +1,9 @@
+{% include "django/forms/widgets/select.html" %}
+
+{{ form.media }}
+
+<script>
+    $(function(){
+        $('#{{ widget.attrs.id }}').select2();
+    })
+</script>

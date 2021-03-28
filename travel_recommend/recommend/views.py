@@ -142,6 +142,7 @@ def weather(request):
 # 계산
 def search(request):
     user_id = request.user.id
+    #print(user_id)
     results = Cal_Knn(user_id)
     print(results[0]['iid'].values)    
     tlist = results[0]['iid'].values

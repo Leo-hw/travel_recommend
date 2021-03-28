@@ -24,7 +24,6 @@ class Treview(models.Model):
         managed = False
         db_table = 'treview'
 
-
 class Tuser(models.Model):
     user_id = models.CharField(primary_key=True, max_length=20)
     user_name = models.CharField(max_length=10, blank=True, null=True)

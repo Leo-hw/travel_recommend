@@ -1,8 +1,4 @@
-'''
-import importlib
-module = importlib.load_module('C:/work/recom/travel_recommend/travel_recommend/recommend/models.py')
-module.function()
-'''
+from . import models
 from recommend.models import Travel, Treview
 from django.contrib import admin
 from .forms import SignUpForm
@@ -24,3 +20,17 @@ admin.site.register(Treview, ReviewAdmin)
 class StarAdmin(admin.ModelAdmin):
     form = SignUpForm
 
+#user
+# @admin.register(models.User)
+# class UserAdmin(admin.ModelAdmin):
+
+#     list_display = (
+#         'nickname',
+#         'email',
+#         'date_joined',
+#     )
+
+#     list_display_links = (
+#         'nickname',
+#         'email',
+#     )

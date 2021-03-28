@@ -9,12 +9,19 @@
 			<div class="alert alert-info">Please enter your account information</div>
 			
 			{% csrf_token %}
-			<label> User Name : <input type="text" name="username"></label><br>
-			<label> Password : &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<label> 아이디 : <input type="text" name="username"></label><br>
+			<label> 비밀번호 : &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
             <input type="password" name="password"></label><br>
-			<label> Password check : <input type="password" name="repeat_password"></label><br>
-            <label> Name : <input type="text" name="name"></label><br>
-			<label> E-mail : <input type="text" name="email"></label><br>
+			<label> 비밀번호 확인 : <input type="password" name="repeat_password"></label><br>
+            <label> 이름 : <input type="text" name="name" style= "width:100px"></label><br>
+			<label> 주민등록번호 : <input type="text" name="jumin" style= "width:70px"> - <input type="text" name="jumin" style= "width:20px">******</label><br>
+			<label> 직업 : 
+                <select name="occupation">
+                    <option value = '선택'> {{occupation}} </option>
+                </select>
+            </label><br>
+			
+            <label> E-mail : <input type="text" name="email"></label><br>
             <!-- city / town / site -->
             
             <label> city :
@@ -49,12 +56,15 @@
             <!-- rating -->
             <label> rating : 
                     <select name = 'rating'>
+                    
                     <option value='1'> 1 </option>
                     <option value='2'> 2 </option>
                     <option value='3'> 3 </option>
                     <option value='4'> 4 </option>
                     <option value='5'> 5 </option>
+                    
                     </select>
+
             </label><br>
 
             <div class="col"></div>

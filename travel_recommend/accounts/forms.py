@@ -4,7 +4,7 @@ from recommend.models import Travel
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django import forms
-
+#from .models import User
 class SignUpForm(forms.ModelForm):
     model = Travel
     

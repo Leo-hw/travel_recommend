@@ -17,13 +17,12 @@ class Travel(models.Model):
 class Treview(models.Model):
     treview_no = models.AutoField(primary_key=True)
     treview_id = models.CharField(max_length=20, blank=True, null=True)
-    tourid = models.IntegerField(db_column='tourId', blank=True, null=True)  # Field name made lowercase.
+    tourId = models.IntegerField(db_column='tourId', blank=True, null=True)  # Field name made lowercase.
     rating = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'treview'
-
 
 class Tuser(models.Model):
     user_id = models.CharField(primary_key=True, max_length=20)

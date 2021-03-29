@@ -4,7 +4,7 @@ from recommend.models import Travel
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django import forms
-
+#from .models import User
 class SignUpForm(forms.ModelForm):
     model = Travel
     
@@ -14,14 +14,12 @@ class SignUpForm(forms.ModelForm):
     name  = forms.CharField(label='name', widget=forms.TextInput, required= True)    
     city = forms.CharField(label = 'city', widget=forms.Select(
         attrs={
-            "placeholder": "select",
-           
-            }))
+            
+           }
+        ))
     town = forms.CharField(label = 'town', widget=forms.Select)
     travel_name = forms.CharField(label = 'travel_name', widget=forms.Select(
         attrs={
-            "placeholder": "select",
-            "values":{1,2,3,4,5},
             
         }
 

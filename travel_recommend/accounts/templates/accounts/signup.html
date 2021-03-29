@@ -1,67 +1,291 @@
 {% extends 'base.html' %} 
 
 {% block content %}
-    
+
+
+<script type="text/javascript">
+window.onload = function(){
+    //alert('b');
+        document.getElementById("close").onclick = function(){
+            $("#blank_warning").hide();
+        };
+        document.getElementById("ok").onclick = function(){
+            $("#blank_warning").hide();
+        };
+        document.getElementById("signup").onclick = function(){
+            alert('a');
+            var bool = valueCheck();
+            //var bool = alert('입력부족');
+            if(bool){
+                frm.submit();
+            }
+        }
+
+};
+function valueCheck(){
+	if(frm.username.value === ''){
+		$("#blank_warning").show();
+		return false;
+	}else if (frm.password.value == ''){
+		$("#blank_warning").show();
+		return false;
+	}else if (frm.repeat_password.value == ''){
+		$("#blank_warning").show();
+		return false;
+	}else if (frm.rating1.value == ''){
+		$("#blank_warning").show();
+		return false;
+	}else if (frm.travel_site1.value == ''){
+		$("#blank_warning").show();
+		return false;
+	}else if (frm.rating2.value == ''){
+		$("#blank_warning").show();
+		return false;
+	}else if (frm.travel_site2.value == ''){
+		$("#blank_warning").show();
+		return false;
+	}else if (frm.rating3.value == ''){
+		$("#blank_warning").show();
+		return false;
+	}else if (frm.travel_site3.value == ''){
+		$("#blank_warning").show();
+		return false;
+	else{
+		return true;
+	}	
+};
+
+
+</script>
+
+
+
+<style>
+
+.btn {
+  text-align: center;
+  
+  margin: 20px 0;
+  padding: 10px;
+}
+</style>
+
+
 <div class="row">
 	<div class="col"></div>
 	<div class="col-6">
-		<form action="" method="post">
+		<form action="" method="post" id = "frm">
 			<div class="alert alert-info">Please enter your account information</div>
 			
 			{% csrf_token %}
-			<label> User Name : <input type="text" name="username"></label><br>
-			<label> Password : &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<label> 아이디 : <input type="text" name="username"></label><br>
+			<label> 비밀번호 : &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
             <input type="password" name="password"></label><br>
-			<label> Password check : <input type="password" name="repeat_password"></label><br>
-            <label> Name : <input type="text" name="name"></label><br>
-			<label> E-mail : <input type="text" name="email"></label><br>
-            <!-- city / town / site -->
-            
-            <label> city :
+			<label> 비밀번호 확인 : <input type="password" name="repeat_password"></label><br>
+            <label> 이름 : <input type="text" name="name" style= "width:100px"></label><br>
+			<label> 주민등록번호 : <input type="text" name="jumin" style= "width:70px"> - <input type="text" name="jumin" style= "width:20px">******</label><br>
+			<label> 직업 : 
+                <select name="occupation">
+                    <option value = '0'>선택하세요 </option>
+                    <option value = '1'> 경영, 사무 </option>
+                    <option value = '2'> 생산, 제조 </option>
+                    <option value = '3'> 영업, 고객상담 </option>
+                    <option value = '4'> 전문직 </option>
+                    <option value = '5'> IT, 인터넷 </option>
+                    <option value = '6'> 교육 </option>
+                    <option value = '7'> 미디어 </option>
+                    <option value = '8'> 특수계층, 공공 </option>
+                    <option value = '9'> 건설 </option>
+                    <option value = '10'> 유통, 무역 </option>
+                    <option value = '11'> 서비스 </option>
+                    <option value = '12'> 디자인 </option>
+                    <option value = '13'> 의료 </option>
+                    <option value = '14'> 학생 </option>
+                    <option value = '15'> 주부 </option>
+                    <option value = '16'> 기타 </option>
+                </select>
+            </label><br>
+			
+            <label> E-mail : <input type="text" name="email"></label><br>
+        <!-- city / town / site -->
+
+
+<div class = "container">
+    <div class = "row align-items-start">
+        <div class = 'col'>
+            <label> city 
+            <br>
                 <select name = 'city'>
                 
                 {% for c in form.city %}
                     <option value='{{ c }}'> {{c}}</option>
                 {% endfor %}
                 </select>
-            </label><br>
-
-
-
-            <label> town : 
+            </label>
+        </div>
+        <div class = 'col'>
+            <label> town  
+            <br>
                 <select name = "town">
                     {% for t in form.town %}
                         <option value='{{ t }}'> {{t}}</option>
                     {% endfor %}
                 </select>
-            </label><br>
-            
-            
-            <label> travel_site: 
-            {% if city in clist  %}
-                {% for t in tlist %}
-                    <select name = 'travel_site'>
-                    <option value='{{ t }}'> {{t}}</option>
+            </label>
+        </div>    
+        
+        <div class = 'col'>
+            <label> travel_site 
+            <br>
+                <select name = 'travel_site'>
+                {% for n in form.name %}
+                    <option value='{{ n }}'> {{ n }}</option>
                 {% endfor %}
                     </select>
-            {% endif %}
-            </label><br>
+            </label>
+        </div>
+        <div class = "col">
             <!-- rating -->
-            <label> rating : 
-                    <select name = 'rating'>
+            <label> rating
+            <br>
+                <select name = 'rating1'>
                     <option value='1'> 1 </option>
                     <option value='2'> 2 </option>
                     <option value='3'> 3 </option>
                     <option value='4'> 4 </option>
                     <option value='5'> 5 </option>
+                </select>
+            </label>
+        </div>
+    </div>
+
+    <div class="row align-items-center">
+        <div class = 'col'>
+            <label> city 
+            <br>
+                <select name = 'city'>
+                
+                {% for c in form.city %}
+                    <option value='{{ c }}'> {{c}}</option>
+                {% endfor %}
+                </select>
+            </label>
+        </div>
+        <div class = 'col'>
+            <label> town  
+            <br>
+                <select name = "town">
+                    {% for t in form.town %}
+                        <option value='{{ t }}'> {{t}}</option>
+                    {% endfor %}
+                </select>
+            </label>
+        </div>    
+        
+        <div class = 'col'>
+            <label> travel_site 
+            <br>
+                <select name = 'travel_site'>
+                {% for n in form.name %}
+                    <option value='{{ n }}'> {{ n }}</option>
+                {% endfor %}
                     </select>
-            </label><br>
+            </label>
+        </div>
+        <div class = "col">
+            <!-- rating -->
+            <label> rating
+            <br>
+                <select name = 'rating1'>
+                    <option value='1'> 1 </option>
+                    <option value='2'> 2 </option>
+                    <option value='3'> 3 </option>
+                    <option value='4'> 4 </option>
+                    <option value='5'> 5 </option>
+                </select>
+            </label>
+        </div>
+    </div>
+
+    <div class="row align-items-end">
+        <div class = 'col'>
+            <label> city 
+            <br>
+                <select name = 'city'>
+                
+                {% for c in form.city %}
+                    <option value='{{ c }}'> {{c}}</option>
+                {% endfor %}
+                </select>
+            </label>
+        </div>
+        <div class = 'col'>
+            <label> town  
+            <br>
+                <select name = "town">
+                    {% for t in form.town %}
+                        <option value='{{ t }}'> {{t}}</option>
+                    {% endfor %}
+                </select>
+            </label>
+        </div>    
+        
+        <div class = 'col'>
+            <label> travel_site 
+            <br>
+                <select name = 'travel_site'>
+                {% for n in form.name %}
+                    <option value='{{ n }}'> {{ n }}</option>
+                {% endfor %}
+                    </select>
+            </label>
+        </div>
+        <div class = "col">
+            <!-- rating -->
+            <label> rating
+            <br>
+                <select name = 'rating1'>
+                    <option value='1'> 1 </option>
+                    <option value='2'> 2 </option>
+                    <option value='3'> 3 </option>
+                    <option value='4'> 4 </option>
+                    <option value='5'> 5 </option>
+                </select>
+            </label>
+        </div>
+    </div>
+</div>
+            
 
             <div class="col"></div>
-			<input type="submit" value="Sign up" class="btn btn-primary" style="margin: auto; text-align: center;" >
-		</form>
+			<input type="submit" value="Sign up" class="btn btn-primary" style="margin: 'auto'; text-align: 'center';" id ="signup" >		</form>
 	</div>
+
+    
 	<div class="col"></div>
+<div class="modExample" style="color: black; font-size: 20px;">
+
+	<div id="blank_warning" class="modal" data-easein="flipYIn" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header" style="display: inline-block;">
+					<button type="button" id="close" class="close" data-dismiss="modal"
+						aria-hidden="true" style="text-align: right; width: 30px; height: 30px; background-color: #ef4300;"  >X</button>
+					<h4 class="modal-title" style="text-align: left; align-items: left;">Error</h4>
+				</div>
+				<div class="modal-body">
+					<p>입력란을 모두 채워주세요.</p>
+				</div>
+				<div class="modal-footer">
+					<button id="ok" class="btn btn-default" data-dismiss="modal"
+						aria-hidden="true" style="width: 100px; height: 50px; font-size: 20px;">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 </div>
 
 {% endblock %}

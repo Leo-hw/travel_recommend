@@ -74,16 +74,26 @@ function valueCheck(){
 <div class="row">
 	<div class="col"></div>
 	<div class="col-6">
+
 		<form action="" method="post" id = "frm">
 			<div class="alert alert-info">Please enter your account information</div>
 			
 			{% csrf_token %}
-			<label> 아이디 : <input type="text" name="username"></label><br>
+			<div class = 'row'>
+                <div class = 'col'>
+                    <label for = "username"> 아이디 : 
+                </div>
+                <div class = 'col'>
+                <input type="text" name="username"></label>
+                </div>
+            </div>
+            <br>
 			<label> 비밀번호 : &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
             <input type="password" name="password"></label><br>
 			<label> 비밀번호 확인 : <input type="password" name="repeat_password"></label><br>
             <label> 이름 : <input type="text" name="name" style= "width:100px"></label><br>
-			<label> 주민등록번호 : <input type="text" name="jumin" style= "width:70px"> - <input type="text" name="jumin" style= "width:20px">******</label><br>
+			<label> 주민등록번호 : <input type="text" name="jumin" style= "width:70px"> - 
+            <input type="text" name="gen" style= "width:20px">******</label><br>
 			<label> 직업 : 
                 <select name="occupation">
                     <option value = '0'>선택하세요 </option>
@@ -109,24 +119,31 @@ function valueCheck(){
             <label> E-mail : <input type="text" name="email"></label><br>
         <!-- city / town / site -->
 
+for test
+{{ form.city }}
+
 
 <div class = "container">
+
     <div class = "row align-items-start">
         <div class = 'col'>
             <label> city 
             <br>
-                <select name = 'city'>
+            
+                <select name = 'city1'>
                 
                 {% for c in form.city %}
-                    <option value='{{ c }}'> {{c}}</option>
+
+                    <option value='{{ c }}'> {{ c }}</option>
                 {% endfor %}
+            
                 </select>
             </label>
         </div>
         <div class = 'col'>
             <label> town  
             <br>
-                <select name = "town">
+                <select name = "town1">
                     {% for t in form.town %}
                         <option value='{{ t }}'> {{t}}</option>
                     {% endfor %}
@@ -137,7 +154,7 @@ function valueCheck(){
         <div class = 'col'>
             <label> travel_site 
             <br>
-                <select name = 'travel_site'>
+                <select name = 'travel_site1'>
                 {% for n in form.name %}
                     <option value='{{ n }}'> {{ n }}</option>
                 {% endfor %}
@@ -163,7 +180,7 @@ function valueCheck(){
         <div class = 'col'>
             <label> city 
             <br>
-                <select name = 'city'>
+                <select name = 'city2'>
                 
                 {% for c in form.city %}
                     <option value='{{ c }}'> {{c}}</option>
@@ -174,7 +191,7 @@ function valueCheck(){
         <div class = 'col'>
             <label> town  
             <br>
-                <select name = "town">
+                <select name = "town2">
                     {% for t in form.town %}
                         <option value='{{ t }}'> {{t}}</option>
                     {% endfor %}
@@ -185,7 +202,7 @@ function valueCheck(){
         <div class = 'col'>
             <label> travel_site 
             <br>
-                <select name = 'travel_site'>
+                <select name = 'travel_site2'>
                 {% for n in form.name %}
                     <option value='{{ n }}'> {{ n }}</option>
                 {% endfor %}
@@ -196,7 +213,7 @@ function valueCheck(){
             <!-- rating -->
             <label> rating
             <br>
-                <select name = 'rating1'>
+                <select name = 'rating2'>
                     <option value='1'> 1 </option>
                     <option value='2'> 2 </option>
                     <option value='3'> 3 </option>
@@ -211,7 +228,7 @@ function valueCheck(){
         <div class = 'col'>
             <label> city 
             <br>
-                <select name = 'city'>
+                <select name = 'city3'>
                 
                 {% for c in form.city %}
                     <option value='{{ c }}'> {{c}}</option>
@@ -222,7 +239,7 @@ function valueCheck(){
         <div class = 'col'>
             <label> town  
             <br>
-                <select name = "town">
+                <select name = "town3">
                     {% for t in form.town %}
                         <option value='{{ t }}'> {{t}}</option>
                     {% endfor %}
@@ -233,7 +250,7 @@ function valueCheck(){
         <div class = 'col'>
             <label> travel_site 
             <br>
-                <select name = 'travel_site'>
+                <select name = 'travel_site3'>
                 {% for n in form.name %}
                     <option value='{{ n }}'> {{ n }}</option>
                 {% endfor %}
@@ -244,7 +261,7 @@ function valueCheck(){
             <!-- rating -->
             <label> rating
             <br>
-                <select name = 'rating1'>
+                <select name = 'rating3'>
                     <option value='1'> 1 </option>
                     <option value='2'> 2 </option>
                     <option value='3'> 3 </option>
@@ -255,11 +272,11 @@ function valueCheck(){
         </div>
     </div>
 </div>
-            
 
             <div class="col"></div>
-			<input type="submit" value="Sign up" class="btn btn-primary" style="margin: 'auto'; text-align: 'center';" id ="signup" >		</form>
-	</div>
+			<input type="submit" value="Sign up" class="btn btn-primary" style="margin: 'auto'; text-align: 'center';" id ="signup" >
+    </form>
+</div>
 
     
 	<div class="col"></div>

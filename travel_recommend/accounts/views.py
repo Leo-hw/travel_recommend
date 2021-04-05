@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 def signup(request):
     
     if request.method == 'POST':
-        signup_form = SignUpForm(request.POST)
+        signup_form = SignUpForm(request.POST, Travel)
         print('views.error')
         if signup_form.is_valid():
             print("instance error")

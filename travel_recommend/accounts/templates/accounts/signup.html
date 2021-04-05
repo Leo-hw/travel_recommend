@@ -80,18 +80,39 @@ function valueCheck(){
 			
 			{% csrf_token %}
 			<div class = 'row'>
-                <div class = 'col'>
+                <div class = 'col-md-3 col-md-offset-3'>
                     <label for = "username"> 아이디 : 
                 </div>
-                <div class = 'col'>
+                <div class = 'col-md-3 col-md-offset-3'>
+
                 <input type="text" name="username"></label>
                 </div>
             </div>
             <br>
-			<label> 비밀번호 : &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
-            <input type="password" name="password"></label><br>
-			<label> 비밀번호 확인 : <input type="password" name="repeat_password"></label><br>
-            <label> 이름 : <input type="text" name="name" style= "width:100px"></label><br>
+            <div class = 'row'>
+                <div class = 'col-md-3 col-md-offset-3'>
+                    <label> 비밀번호 : 
+                </div>
+                <div class = 'col-md-3 col-md-offset-3'>
+                <input type="password" name="password"></label>
+                </div>
+            </div>
+			<div class = 'row'>
+                <div class = 'col-md-3 col-md-offset-3'>
+                    <label> 비밀번호 확인 : 
+                </div>
+                <div class = 'col-md-3 col-md-offset-3'>
+                    <input type="password" name="repeat_password"></label>
+                </div>
+            </div>
+            <div class = 'row'>
+                <div class = 'col-md-3 col-md-offset-3'>
+                    <label> 이름 :
+                </div>
+                <div class = 'col-md-3 col-md-offset-3'>
+                    <input type="text" name="name" style= "width:100px"></label>
+                </div>
+            </div>
 			<label> 주민등록번호 : <input type="text" name="jumin" style= "width:70px"> - 
             <input type="text" name="gen" style= "width:20px">******</label><br>
 			<label> 직업 : 
@@ -119,16 +140,9 @@ function valueCheck(){
             <label> E-mail : <input type="text" name="email"></label><br>
         <!-- city / town / site -->
 
-<<<<<<< HEAD
 for test
 {{ form.city }}
 
-=======
-dfsadfdf
-for test
-{{ form.city }}
-{{city}}
->>>>>>> ed0796e76df4a15fa60e7c53d94bf6ef98a67922
 
 <div class = "container">
 
@@ -139,7 +153,7 @@ for test
             
                 <select name = 'city1'>
                 
-                {% for c in form.city %}
+                {% for c in form.cities %}
 
                     <option value='{{ c }}'> {{ c }}</option>
                 {% endfor %}

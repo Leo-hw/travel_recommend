@@ -155,3 +155,15 @@ def search(request):
     context = {'tour':flist}
     return render(request, 'search.html', context)
 
+'''
+treview
+treview_no, treview_id, tourid, rating, genre 
+
+tuser
+tuser_no, tuser_id, tuser_occ, 
+tuser_jumin, tuser_gender
+
+travel
+tourid, city, town, name, type1, type2, type3, genre
+
+'''

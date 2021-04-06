@@ -27,4 +27,4 @@ def signup(request):
         signup_form = SignUpForm() 
         #print('else error')
                 
-    return render(request, 'accounts/signup.html', {'form':signup_form.as_p})
+    return render(request, 'accounts/signup.html', {'form':signup_form})

@@ -73,22 +73,23 @@ function valueCheck(){
 
 <div class="row">
 	<div class="col"></div>
-	<div class="col-6">
-
+	<div cl ass="col-6">
 		<form action="" method="post" id = "frm">
 			<div class="alert alert-info">Please enter your account information</div>
-			
 			{% csrf_token %}
 			<div class = 'row'>
                 <div class = 'col-md-3 col-md-offset-3'>
                     <label for = "username"> 아이디 : 
                 </div>
                 <div class = 'col-md-3 col-md-offset-3'>
-
-                <input type="text" name="username"></label>
+                    {{ form.username }}
+                    <!--
+                    <input type="text" name="username">
+                    -->
+                </label>
                 </div>
             </div>
-            <br>
+            
             <div class = 'row'>
                 <div class = 'col-md-3 col-md-offset-3'>
                     <label> 비밀번호 : 
@@ -114,20 +115,23 @@ function valueCheck(){
                 </div>
             </div>
 			<div class = 'row'>
-                <div class = 'col-xs-6 col-md-4'>
+                <div class = 'col-sm'>
                     <label> 주민등록번호 :
                 </div> 
-                <div class = 'col-xs-6 col-md-4'>
+                <div class = 'col-sm'>
                     <input type="text" name="jumin" style= "width:70px"> - 
                     <input type="text" name="gen" style= "width:20px">******</label>
                 </div> 
+                <div class = 'col-sm'></div>
             </div>
             <div class = 'row'>
                 <div class = 'col-md-3 col-md-offset-3'>
                     <label> 직업 :
                 </div>
                 <div class = 'col-md-3 col-md-offset-3'>
-                        <select name="occupation">
+                        {{ form.occupation }}
+                        <!--
+                            <select name="occupation">
                             <option value = '0'>선택하세요 </option>
                             <option value = '1'> 경영, 사무 </option>
                             <option value = '2'> 생산, 제조 </option>
@@ -146,6 +150,7 @@ function valueCheck(){
                             <option value = '15'> 주부 </option>
                             <option value = '16'> 기타 </option>
                         </select>
+                        -->
                     </label>
                 </div>
 			</div>
@@ -159,24 +164,38 @@ function valueCheck(){
             </div>
             
 <!-- city / town / site -->
-for test
-{{ form.city }}
+<div class = 'row'> 
+    <div class = 'col'></div>
+    <div class = 'col-5'>
+        <div class = 'row'><br></div>
+        <div class = 'row'>
+            여행지 선택
+        </div>
+        <div class = 'row'>
+            
+            {{ form.city }}
+            
 
+            
+        </div>
+        <div class = 'row'><br></div>
+    </div>
+    <div class = 'col'></div>
+</div>
 <div class = "container">
 
     <div class = "row align-items-start">
         <div class = 'col'>
-            <label> city 
-            <br>
-            
-                <select name = 'city1'>
-                
-                {% for c in form.cities %}
-
-                    <option value='{{ c }}'> {{ c }}</option>
-                {% endfor %}
-            
+            <div class = 'row'> 
+                <label> city 
+            </div>
+            <div class = 'row'> 
+                <select name = 'city1' style='width:50px;'>
+                    {% for c in form.city %}
+                        <option value='{{ c }}'> {{ c }}</option>
+                    {% endfor %}
                 </select>
+            </div>
             </label>
         </div>
         <div class = 'col'>
@@ -194,10 +213,10 @@ for test
             <label> travel_site 
             <br>
                 <select name = 'travel_site1'>
-                {% for n in form.name %}
+                {% for n in form.travel_sites %}
                     <option value='{{ n }}'> {{ n }}</option>
                 {% endfor %}
-                    </select>
+                </select>
             </label>
         </div>
         <div class = "col">

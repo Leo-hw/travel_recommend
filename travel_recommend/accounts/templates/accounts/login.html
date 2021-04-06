@@ -12,7 +12,13 @@
     <form action = "" method = "post">
         {% csrf_token %}
         {{form.as_p}}
-        <input type = "submit" value = "login" class = "btn btn-outline-primary">
+        <div class = 'row'>
+            <div class = 'col-xs-6 col-sm-4'></div>
+            <div class = 'col-xs-6 col-sm-4'>
+                <input type = "submit" value = "login" class = "btn btn-outline-primary">
+            </div>
+            <div class = 'col-xs-6 col-sm-4'></div>
+        </div>
     </form>
     </div>
 <div class = "col"></div>

@@ -21,33 +21,12 @@ conn = MySQLdb.connect(**config)
 
 class SignUpForm(forms.ModelForm):
     model = Travel
-    
-    #cursor = conn.cursor()
-    '''
-    def __init__(self, *args, **kwargs):
-        super(SignUpForm, self).__init__(*args, **kwargs)
-        towns = self.request.session['town']
-        traves = self.request.session['travel_site']
-        town_list = []
-        trave_sites = []
         
-        print(towns)
-        for t in towns:
-            town_list.append(t['town'])
-        for tr in traves:
-            trave_sites.append(tr['travel_site'])
-        self.fields['town'].choices = town_list
-        self.fields['travel_site'].choices = trave_sites
-        print(town_list, trave_sites)
-    town = forms.ChoiceField(choices=town_list, required=True)
-    travel_site = forms.ChoiceField(choices=trave_sites)
-    '''
-    
     # define fields 
     username = forms.CharField(label = 'username', widget=forms.TextInput, required=True)
     password = forms.CharField(label = 'password', widget=forms.PasswordInput, required= True)
     repeat_password = forms.CharField(label='repeat_password', widget=forms.PasswordInput, required= True)
-    #name  = forms.CharField(label='name', widget=forms.TextInput, required= True)
+    #site  = forms.CharField(label='name', widget=forms.TextInput, required= True)
     jumin = forms.IntegerField(label = 'jumin', required=True)
     gen = forms.IntegerField(label='gen', required=True, validators=[MinValueValidator(1), MaxValueValidator(9)])
     #occupations ={'선택하세요', '경영, 사무','생산, 제조','영업, 고객상담','전문직','IT, 인터넷','교육' ,'미디어','특수계층, 공공','건설','유통, 무역','서비스','디자인','의료','학생','주부','기타'}
@@ -55,10 +34,10 @@ class SignUpForm(forms.ModelForm):
     #email = forms.EmailField(label='이메일', widget=forms.EmailInput)
     rating = forms.IntegerField(label='rating', required = True, validators=[MinValueValidator(1), MaxValueValidator(5)])
     
-    cities = list(Travel.objects.values_list('city', flat = True).distinct())
-    city = forms.CharField(label = 'city', widget=forms.Select(choices=cities))
-    print(type(city), city)
-    #test = forms.ChoiceField(label = 'test', choices={'가', '나', '다'})
+    # cities = list(Travel.objects.values_list('city', flat = True).distinct())
+    # city = forms.CharField(label = 'city', widget=forms.Select(choices=cities))
+    # print(type(city), city)
+    # test = forms.ChoiceField(label = 'test', choices={'가', '나', '다'})
     '''
     towns = list(Travel.objects.values_list('town', flat = True).distinct())
     town = forms.CharField(label = 'town', widget=forms.Select(choices=towns))
@@ -77,7 +56,7 @@ class SignUpForm(forms.ModelForm):
     cities = []
     for c in cits:
         cities.append(c)
-    #cities = 
+    #cities = cursor.fetchall() 
     city = forms.CharField(label = 'city', widget=forms.Select(choices=cities))
     
     #동
@@ -107,10 +86,7 @@ class SignUpForm(forms.ModelForm):
     class Meta:
         model = User
         
-        # fill out fields with values for signup
-        # can be added another field
         # fields = ['username', 'password','repeat_password', 'name','jumin','gen', 'occupation','email', 'rating', 'city', 'town', 'travel_name']
-        
         # fields = ['username', 'password','repeat_password', 'name','jumin','gen', 'occupation','email', 'rating', 'city', 'town']
         fields = '__all__'
 

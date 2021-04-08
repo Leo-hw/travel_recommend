@@ -17,9 +17,7 @@ class Top5Site(ListView):
     template_name_suffix = '_best'
 
 # make detail function 
-
-# 회원 가입시 리뷰 - 기본적으로 3~5 곳 설정 - 선택적으로 
-# 리뷰를 안하면, best 여행지만 show하고
+# if don't have any review, then show popular 5 places
 
 from django.views.generic import CreateView
 class ReviewCreate(CreateView):
@@ -44,9 +42,6 @@ class ReviewUpdate(UpdateView):
     def dispatch(self, request, *args, **kwargs):
         object = self.get_object()
 
-        # 여기 author 확인 필요
-        # 일단 여기부분은 django documentation 확인이 필요.
-        
         if object.author != request.treview_id:
             messages.warning(request, "권한이 없습니다.")
             return HttpResponseRedirect('/')

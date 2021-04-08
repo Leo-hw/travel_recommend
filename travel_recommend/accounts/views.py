@@ -8,7 +8,13 @@ from django.contrib.auth.models import User
 # function for signup.
 # manage accounts. login/logout and modify user info
 def signup(request):
+    town = list(Travel.objects.values_list('town', flat = True).distinct())
+    city = list(Travel.objects.values_list('city', flat = True).distinct())
+    site = list(Travel.objects.values_list('site', flat = True).distinct())
     
+    # should be modified with ajax or using widgets of django
+    # => to react 
+    #print(site)
     if request.method == 'POST':
         signup_form = SignUpForm(request.POST, Travel)
         print('views.error')
@@ -27,4 +33,4 @@ def signup(request):
         signup_form = SignUpForm() 
         #print('else error')
                 
-    return render(request, 'accounts/signup.html', {'form':signup_form})
+    return render(request, 'accounts/signup.html', {'form':signup_form, 'town':town, 'city':city, 'site':site})

@@ -190,8 +190,8 @@ function valueCheck(){
                 <label> city 
             </div>
             <div class = 'row'> 
-                <select name = 'city1' style='width:50px;'>
-                    {% for c in form.city %}
+                <select name = 'city1'>
+                    {% for c in city %}
                         <option value='{{ c }}'> {{ c }}</option>
                     {% endfor %}
                 </select>
@@ -202,7 +202,7 @@ function valueCheck(){
             <label> town  
             <br>
                 <select name = "town1">
-                    {% for t in form.town %}
+                    {% for t in town %}
                         <option value='{{ t }}'> {{t}}</option>
                     {% endfor %}
                 </select>
@@ -213,8 +213,8 @@ function valueCheck(){
             <label> travel_site 
             <br>
                 <select name = 'travel_site1'>
-                {% for n in form.travel_sites %}
-                    <option value='{{ n }}'> {{ n }}</option>
+                {% for s in site %}
+                    <option value='{{ s }}'> {{ s }}</option>
                 {% endfor %}
                 </select>
             </label>
@@ -240,7 +240,7 @@ function valueCheck(){
             <br>
                 <select name = 'city2'>
                 
-                {% for c in form.city %}
+                {% for c in city %}
                     <option value='{{ c }}'> {{c}}</option>
                 {% endfor %}
                 </select>
@@ -250,7 +250,7 @@ function valueCheck(){
             <label> town  
             <br>
                 <select name = "town2">
-                    {% for t in form.town %}
+                    {% for t in town %}
                         <option value='{{ t }}'> {{t}}</option>
                     {% endfor %}
                 </select>
@@ -261,7 +261,7 @@ function valueCheck(){
             <label> travel_site 
             <br>
                 <select name = 'travel_site2'>
-                {% for n in form.name %}
+                {% for n in site %}
                     <option value='{{ n }}'> {{ n }}</option>
                 {% endfor %}
                     </select>
@@ -288,7 +288,7 @@ function valueCheck(){
             <br>
                 <select name = 'city3'>
                 
-                {% for c in form.city %}
+                {% for c in city %}
                     <option value='{{ c }}'> {{c}}</option>
                 {% endfor %}
                 </select>
@@ -298,7 +298,7 @@ function valueCheck(){
             <label> town  
             <br>
                 <select name = "town3">
-                    {% for t in form.town %}
+                    {% for t in town %}
                         <option value='{{ t }}'> {{t}}</option>
                     {% endfor %}
                 </select>
@@ -309,7 +309,7 @@ function valueCheck(){
             <label> travel_site 
             <br>
                 <select name = 'travel_site3'>
-                {% for n in form.name %}
+                {% for n in site %}
                     <option value='{{ n }}'> {{ n }}</option>
                 {% endfor %}
                     </select>

@@ -1,0 +1,13 @@
+<!-- templates/widgets/counter_text.html -->
+
+{% include "django/forms/widgets/input.html" %}
+
+<span id="town_list_{{widget.attrs.id}}"></span>
+
+<script>
+    document.querySelector('#{{widget.attrs.id}}').addEventListener("select", function(){
+        document.querySelector("#town_list_{{ widget.attrs.id}}").innerHTML = 
+        'dfasdf'
+        this.value.length + '글자';
+    })
+</script>

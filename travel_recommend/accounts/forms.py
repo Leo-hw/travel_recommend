@@ -1,13 +1,13 @@
 from re import T
+from .widgets import TownListSelect
 from django import forms
-from django.forms import fields
+from django.forms import fields, widgets
 from recommend.models import Travel
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 #from .models import User
-
-
 import MySQLdb
+
 config = {
     'host':'127.0.0.1',
     'user':'root',
@@ -26,18 +26,35 @@ class SignUpForm(forms.ModelForm):
     username = forms.CharField(label = 'username', widget=forms.TextInput, required=True)
     password = forms.CharField(label = 'password', widget=forms.PasswordInput, required= True)
     repeat_password = forms.CharField(label='repeat_password', widget=forms.PasswordInput, required= True)
+<<<<<<< HEAD
     #site  = forms.CharField(label='name', widget=forms.TextInput, required= True)
+=======
+    name  = forms.CharField(label='name', widget=forms.TextInput, required= True)
+>>>>>>> 7aa70177aecd59a9afddeb62c6c74f143c0e46a3
     jumin = forms.IntegerField(label = 'jumin', required=True)
     gen = forms.IntegerField(label='gen', required=True, validators=[MinValueValidator(1), MaxValueValidator(9)])
-    #occupations ={'선택하세요', '경영, 사무','생산, 제조','영업, 고객상담','전문직','IT, 인터넷','교육' ,'미디어','특수계층, 공공','건설','유통, 무역','서비스','디자인','의료','학생','주부','기타'}
+    #occupations = {'선택하세요', '경영, 사무','생산, 제조','영업, 고객상담','전문직','IT, 인터넷','교육' ,'미디어','특수계층, 공공','건설','유통, 무역','서비스','디자인','의료','학생','주부','기타'}
+    
+    #occupation = forms.CharField(label='occupation', required=True, widget=forms.Select(choices = occupations))
     occupation = forms.CharField(label='occupation')
-    #email = forms.EmailField(label='이메일', widget=forms.EmailInput)
+    email = forms.EmailField(label='이메일', widget=forms.EmailInput)
     rating = forms.IntegerField(label='rating', required = True, validators=[MinValueValidator(1), MaxValueValidator(5)])
     
+<<<<<<< HEAD
     # cities = list(Travel.objects.values_list('city', flat = True).distinct())
     # city = forms.CharField(label = 'city', widget=forms.Select(choices=cities))
     # print(type(city), city)
     # test = forms.ChoiceField(label = 'test', choices={'가', '나', '다'})
+=======
+    cities = list(Travel.objects.values_list('city', flat = True).distinct())
+    city = forms.CharField(label = 'city', widget=forms.Select(choices=cities))
+    print(type(city), cities)
+    
+    ctest= {'가나', '나다', 'abc'}
+    test = forms.ChoiceField(label = 'test', widget=forms.Select(choices=ctest))
+    #test = forms.CharField(label = 'test', widget=forms.TextInput, required=True)
+    
+>>>>>>> 7aa70177aecd59a9afddeb62c6c74f143c0e46a3
     '''
     towns = list(Travel.objects.values_list('town', flat = True).distinct())
     town = forms.CharField(label = 'town', widget=forms.Select(choices=towns))
@@ -86,9 +103,20 @@ class SignUpForm(forms.ModelForm):
     class Meta:
         model = User
         
+<<<<<<< HEAD
         # fields = ['username', 'password','repeat_password', 'name','jumin','gen', 'occupation','email', 'rating', 'city', 'town', 'travel_name']
+=======
+        # fill out fields with values for signup
+        # can be added another field
+        #fields = ['username', 'password','repeat_password', 'name','jumin','gen', 'occupation','email', 'rating', 'city', 'town', 'travel_site']
+        
+>>>>>>> 7aa70177aecd59a9afddeb62c6c74f143c0e46a3
         # fields = ['username', 'password','repeat_password', 'name','jumin','gen', 'occupation','email', 'rating', 'city', 'town']
         fields = '__all__'
+        # widgets = {
+        #     'town':TownListSelect,
+            
+        # }
 
     def clean_Repeat_password(self):
         cd = self.cleaned_data

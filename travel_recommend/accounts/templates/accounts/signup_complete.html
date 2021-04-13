@@ -6,7 +6,10 @@
 	<div class="col"></div>
 	<div class="col-6">
 			<div class="alert alert-primary" role = "alert">
+			{% if user.is_authenticated %}
+				{{ username }}
 				you are successfully signed up 
+			{% endif %}
 			</div>
 			<a href="{% url 'accounts:login' %}"> Move to Login</a>
 	</div>

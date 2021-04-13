@@ -5,7 +5,7 @@ from django.db.models import fields
 from django.http.response import HttpResponseRedirect
 from django.views.generic.base import View
 from django.views.generic.edit import DeleteView, UpdateView
-from .models import Travel, Treview, Tuser
+from .models import Travel, Treview #, Tuser
 from django.shortcuts import redirect, render
 from django.views.generic.list import ListView
 

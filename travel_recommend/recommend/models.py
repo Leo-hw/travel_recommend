@@ -24,9 +24,6 @@ class Travel(models.Model):
     genre2 = models.CharField(max_length=20,blank=True, null=True)
     genre3 = models.CharField(max_length=20,blank=True, null=True)
     
-    #tscore 뭐지...?
-    # 이거  tourid , city, town, site, genre
-
     class Meta:
         managed = False
         db_table = 'travel'
@@ -35,7 +32,7 @@ class Travel(models.Model):
 class Treview(models.Model):
     treview_no = models.AutoField(primary_key=True)
     treview_id = models.CharField(max_length=20, blank=True, null=True)
-    tourId = models.IntegerField(db_column='tourId', blank=True, null=True)  # Field name made lowercase.
+    tourid = models.IntegerField(db_column='tourid', blank=True, null=True)  # Field name made lowercase.
     rating = models.IntegerField(blank=True, null=True)
     
 

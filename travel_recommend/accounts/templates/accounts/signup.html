@@ -115,7 +115,7 @@ function valueCheck(){
                 </div>
             </div>
 			<div class = 'row'>
-                <div class = 'col-sm'>
+                <div class = 'col-md-3 col-md-offset-3'>
                     <label> 주민등록번호 :
                 </div> 
                 <div class = 'col-sm'>
@@ -170,12 +170,13 @@ function valueCheck(){
     <div class = 'col-5'>
         <div class = 'row'><br></div>
         <div class = 'row'>
-            여행지 선택
+            
         </div>
         <div class = 'row'>
-
+            {% comment %} 
             {{ form.test }}
             {{ form.occupation }}
+             {% endcomment %}
         
             
         </div>
@@ -187,16 +188,12 @@ function valueCheck(){
 
     <div class = "row align-items-start">
         <div class = 'col'>
-            <div class = 'row'> 
-                <label> city 
-            </div>
-            <div class = 'row'> 
+            <label> city 
                 <select name = 'city1'>
                     {% for c in city %}
                         <option value='{{ c }}'> {{ c }}</option>
                     {% endfor %}
                 </select>
-            </div>
             </label>
         </div>
         <div class = 'col'>
@@ -209,7 +206,6 @@ function valueCheck(){
                 </select>
             </label>
         </div>    
-        
         <div class = 'col'>
             <label> travel_site 
             <br>

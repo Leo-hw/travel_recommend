@@ -25,12 +25,18 @@ def signup(request):
             user_instance.save()
             return render(request, 'accounts/singup_complete.html', {'username':user_instance.username})
         
-        # else:
-        #     return render(request, 'accounts/signup.html', {'form':signup_form.as_p})
-
+        
     else:
         #request = request.GET
         signup_form = SignUpForm() 
         #print('else error')
                 
     return render(request, 'accounts/signup.html', {'form':signup_form, 'town':town, 'city':city, 'site':site})
+
+
+def login(request):
+    pass
+
+    
+def logout(request):
+    pass

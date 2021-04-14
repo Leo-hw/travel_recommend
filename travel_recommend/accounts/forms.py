@@ -1,5 +1,5 @@
 from re import T
-from .widgets import TownListSelect
+from .widgets import TownListSelect, AutoCompleteWidget
 from django import forms
 from django.forms import fields, widgets
 from recommend.models import Travel
@@ -32,7 +32,7 @@ class SignUpForm(forms.ModelForm):
     #occupations = {'선택하세요', '경영, 사무','생산, 제조','영업, 고객상담','전문직','IT, 인터넷','교육' ,'미디어','특수계층, 공공','건설','유통, 무역','서비스','디자인','의료','학생','주부','기타'}
     
     #occupation = forms.CharField(label='occupation', required=True, widget=forms.Select(choices = occupations))
-    occupation = forms.CharField(label='occupation')
+    occupation = forms.CharField(label='occupation', widget=AutoCompleteWidget)
     email = forms.EmailField(label='이메일', widget=forms.EmailInput)
     rating = forms.IntegerField(label='rating', required = True, validators=[MinValueValidator(1), MaxValueValidator(5)])
     
@@ -48,51 +48,16 @@ class SignUpForm(forms.ModelForm):
     travel_sites = list(Travel.objects.values_list('name', flat = True).distinct())
     travel_site = forms.CharField(label = 'travel_site', widget=forms.Select(choices=travel_sites))
     print(travel_sites)
-        
-    #도시
-    sql = "select distinct(city) from travel"
-    cursor.execute(sql)
-    conn.commit() 
-    
-    cits = cursor.fetchall()
-    cities = []
-    for c in cits:
-        cities.append(c)
-    #cities = cursor.fetchall() 
-    city = forms.CharField(label = 'city', widget=forms.Select(choices=cities))
-    
-    #동
-    sql2 = "select distinct(town) from travel"
-    cursor.execute(sql2)
-    tows = cursor.fetchall()
-    towns = []
-    for t in tows:
-        towns.append(t)
-    #towns = cursor.fetchall()
-    town = forms.CharField(label = 'town', widget=forms.Select(choices=towns))
-    
-    #여행지명
-    sql3 = "select distinct(name) from travel"
-    cursor.execute(sql3)
-    #travel_sites = cursor.fetchall()
-    travel_sites = []
-    travel_s = cursor.fetchall()
-    for ts in travel_s:
-        travel_sites.append(ts)
-    travel_name = forms.CharField(label = 'travel_name', widget=forms.Select(choices=travel_sites))
-    
-    cursor.close()
-    conn.close()
-    '''
-
+    '''     
+   
     class Meta:
         model = User
-        
         # fields = ['username', 'password','repeat_password', 'name','jumin','gen', 'occupation','email', 'rating', 'city', 'town', 'travel_name']
         fields = '__all__'
-        # widgets = {
-        #     'town':TownListSelect,
-        # }
+        widgets = {
+        #    'town':TownListSelect,
+            'occupation':AutoCompleteWidget,    
+        }
 
     def clean_Repeat_password(self):
         cd = self.cleaned_data

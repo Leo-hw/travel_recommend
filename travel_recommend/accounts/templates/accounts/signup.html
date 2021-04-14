@@ -21,7 +21,7 @@ window.onload = function(){
             }
         }
 
-};0
+};
 function valueCheck(){
 	if(frm.username.value === ''){
 		$("#blank_warning").show();
@@ -65,7 +65,7 @@ function valueCheck(){
 .btn {
   text-align: center;
   
-  margin: 20px 0;
+  margin: 20px;
   padding: 10px;
 }
 </style>
@@ -170,15 +170,8 @@ function valueCheck(){
     <div class = 'col-5'>
         <div class = 'row'><br></div>
         <div class = 'row'>
-            
         </div>
         <div class = 'row'>
-            {% comment %} 
-            {{ form.test }}
-            {{ form.occupation }}
-             {% endcomment %}
-        
-            
         </div>
         <div class = 'row'><br></div>
     </div>
@@ -188,7 +181,7 @@ function valueCheck(){
 
     <div class = "row align-items-start">
         <div class = 'col'>
-            <label> city 
+                <label> city 
                 <select name = 'city1'>
                     {% for c in city %}
                         <option value='{{ c }}'> {{ c }}</option>

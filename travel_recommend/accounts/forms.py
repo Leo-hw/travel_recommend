@@ -1,4 +1,8 @@
 from re import T
+
+from django.forms.models import ModelForm
+from .models import Occupations
+from .models import Tuser
 from .widgets import TownListSelect, AutoCompleteWidget
 from django import forms
 from django.forms import fields, widgets
@@ -20,7 +24,7 @@ config = {
 conn = MySQLdb.connect(**config)
 
 class SignUpForm(forms.ModelForm):
-    model = Travel
+    model = Tuser
         
     # define fields 
     username = forms.CharField(label = 'username', widget=forms.TextInput, required=True)
@@ -34,7 +38,7 @@ class SignUpForm(forms.ModelForm):
     #occupation = forms.CharField(label='occupation', required=True, widget=forms.Select(choices = occupations))
     occupation = forms.CharField(label='occupation', widget=AutoCompleteWidget)
     email = forms.EmailField(label='이메일', widget=forms.EmailInput)
-    rating = forms.IntegerField(label='rating', required = True, validators=[MinValueValidator(1), MaxValueValidator(5)])
+    rating = forms.IntegerField(label='평점', required = True, validators=[MinValueValidator(1), MaxValueValidator(5)])
     
     # cities = list(Travel.objects.values_list('city', flat = True).distinct())
     # city = forms.CharField(label = 'city', widget=forms.Select(choices=cities))
@@ -51,7 +55,7 @@ class SignUpForm(forms.ModelForm):
     '''     
    
     class Meta:
-        model = User
+        model = Tuser
         # fields = ['username', 'password','repeat_password', 'name','jumin','gen', 'occupation','email', 'rating', 'city', 'town', 'travel_name']
         fields = '__all__'
         widgets = {
@@ -65,3 +69,8 @@ class SignUpForm(forms.ModelForm):
             raise forms.ValidationError('Your password is not correct')
         return cd['repeat_password']
  
+
+class OccuForm(ModelForm):
+    class Meta:
+        model = Occupations
+        fields = ['occ']

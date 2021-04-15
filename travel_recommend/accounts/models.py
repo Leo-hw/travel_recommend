@@ -60,23 +60,41 @@ from datetime import datetime
 #         return self._create_user(email, password, **extra_fields)
 
 class Tuser(models.Model):
+    model = User
     user_id = models.CharField(primary_key=True, max_length=20)
     user_name = models.CharField(max_length=10, blank=True, null=True)
     user_pwd = models.CharField(max_length=10, blank=True, null=True)
-    occupation = models.IntegerField(max_length=50, blank=False, null=False)
+    occ_no = models.IntegerField(blank=False, null=False)
     class Meta:
         managed = False
         db_table = 'tuser'
 
 # for connect occupations table
 # db 에 따로 occupations table 을 만들어야 하나??
-occupations_choices = {
-    "1":"others",
+occupations_choices = (
+        ("1","경영, 사무"),
+        ("2","생산, 제조"),
+        ("3","영업, 고객상담"),
+        ("4","전문직"),
+        ("5","IT, 인터넷"),
+        ("6","교육"),
+        ("7","미디어"),
+        ("8","특수계층, 공공"),
+        ("9","건설"),
+        ("11","유통, 무역"),
+        ("12","서비스"),
+        ("13","디자인"),
+        ("14","의료"),
+        ("15","학생"),
+        ("16","주부"),
+        ("0","기타"),
 
-}
+)
+
+
 # class Occupations(models.Model):
 #     occupation = models.CharField(max_length=50, choices=occupations_choices, default='1')
 
 class Occupations(models.Model):
-    occ = models.CharField(max_length=50, choices=occupations_choices)
-    occ_no = models.ForeignKey('Tuser', related_name='tuser', on_delete=models.CASCADE, db_column='occ_no')
+    occ = models.CharField(max_length=50, choices=occupations_choices, default='1')
+    occ_no = models.ForeignKey('Tuser', related_name='auth_user', on_delete=models.CASCADE, db_column='occ_no')

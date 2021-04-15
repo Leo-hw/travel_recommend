@@ -1,7 +1,9 @@
+from .models import Occupations
 from django.views.generic.edit import DeleteView, UpdateView
+from django.views.generic.list import ListView
 from recommend.models import Travel
 
-from .forms import SignUpForm
+from .forms import OccuForm, SignUpForm
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.models import User
 
@@ -33,6 +35,15 @@ def signup(request):
                 
     return render(request, 'accounts/signup.html', {'form':signup_form, 'town':town, 'city':city, 'site':site})
 
+
+class ShowOcc(ListView):
+
+    model = Occupations 
+    form_class = OccuForm
+    template_name = 'show_occ.html'
+    succes_url = 'show_occ.html'
+
+    print(Occupations.objects.all())     
 
 def login(request):
     pass

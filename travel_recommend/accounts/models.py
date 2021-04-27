@@ -1,7 +1,28 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, User, UserManager
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from pytz import timezone
 from datetime import datetime
+
+occupations_choices = (
+        ("1","경영, 사무"),
+        ("2","생산, 제조"),
+        ("3","영업, 고객상담"),
+        ("4","전문직"),
+        ("5","IT, 인터넷"),
+        ("6","교육"),
+        ("7","미디어"),
+        ("8","특수계층, 공공"),
+        ("9","건설"),
+        ("11","유통, 무역"),
+        ("12","서비스"),
+        ("13","디자인"),
+        ("14","의료"),
+        ("15","학생"),
+        ("16","주부"),
+        ("0","기타"),
+
+)
 # Create your models here.
 
 # user id 와 별개로 nickname = id, name = name, 디비 자동으로 관리를 위해 pk(user_no)/ user_id
@@ -64,32 +85,13 @@ class Tuser(models.Model):
     user_id = models.CharField(primary_key=True, max_length=20)
     user_name = models.CharField(max_length=10, blank=True, null=True)
     user_pwd = models.CharField(max_length=10, blank=True, null=True)
-    occ_no = models.IntegerField(blank=False, null=False)
+    occ_no = models.IntegerField(blank=False, null=False, validators=[MinValueValidator(0), MaxValueValidator(16)], choices=occupations_choices)
     class Meta:
         managed = False
         db_table = 'tuser'
 
 # for connect occupations table
 # db 에 따로 occupations table 을 만들어야 하나??
-occupations_choices = (
-        ("1","경영, 사무"),
-        ("2","생산, 제조"),
-        ("3","영업, 고객상담"),
-        ("4","전문직"),
-        ("5","IT, 인터넷"),
-        ("6","교육"),
-        ("7","미디어"),
-        ("8","특수계층, 공공"),
-        ("9","건설"),
-        ("11","유통, 무역"),
-        ("12","서비스"),
-        ("13","디자인"),
-        ("14","의료"),
-        ("15","학생"),
-        ("16","주부"),
-        ("0","기타"),
-
-)
 
 
 # class Occupations(models.Model):
@@ -97,4 +99,7 @@ occupations_choices = (
 
 class Occupations(models.Model):
     occ = models.CharField(max_length=50, choices=occupations_choices, default='1')
-    occ_no = models.ForeignKey('Tuser', related_name='auth_user', on_delete=models.CASCADE, db_column='occ_no')
+    occ_no = models.ForeignKey('Tuser', related_name='tuser', on_delete=models.CASCADE, db_column='occ_no')
+    class Meta:
+        managed = False
+    db_table = 'occupations'

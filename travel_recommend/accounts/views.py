@@ -1,8 +1,9 @@
+from django.http.response import HttpResponse, HttpResponseRedirect
 from .models import Occupations
 from django.views.generic.edit import DeleteView, UpdateView
 from django.views.generic.list import ListView
 from recommend.models import Travel
-
+from django.contrib import messages
 from .forms import OccuForm, SignUpForm
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.models import User
@@ -10,6 +11,9 @@ from django.contrib.auth.models import User
 # function for signup.
 # manage accounts. login/logout and modify user info
 def signup(request):
+
+    # login 된 상태에서 접근 안되도록 막아야 함.
+
     town = list(Travel.objects.values_list('town', flat = True).distinct())
     city = list(Travel.objects.values_list('city', flat = True).distinct())
     site = list(Travel.objects.values_list('site', flat = True).distinct())
@@ -36,14 +40,23 @@ def signup(request):
     return render(request, 'accounts/signup.html', {'form':signup_form, 'town':town, 'city':city, 'site':site})
 
 class ShowOcc(ListView):
-    pass
     model = Occupations 
     form_class = OccuForm
-    template_name = 'show_occ.html'
-    succes_url = 'show_occ.html'
+    #template_name = 'show_occ.html'
 
-    print(Occupations.objects.all())     
+    # def dispatch(self, request, *args, **kwargs):
+    #     if not request.user.is_authenticated:
+    #         messages.warning(request, 'Please login, this service needs login before')
+    #         return HttpResponseRedirect('/')
+    #     return super(ShowOcc, self).dispatch(request, *args, **kwargs)
 
+def viewOcc(request):
+    print('viewOcc 실행')
+    model = Occupations
+    form_class = OccuForm
+    print('여기는 뷰스',form_class)
+    
+    return render(request,'accounts/show_occ.html',{'form':form_class} )
 
 def login(request):
     pass
@@ -51,3 +64,23 @@ def login(request):
     
 def logout(request):
     pass
+
+def getTravelSite(request):
+    area = request.GET['area']
+    way = request.GET['way']
+    print(area, way)
+    city = area.split()[0]
+    if len(area.split()) == 3:
+        town = area.split()[1] + " " + area.split()[2]
+    else:
+        town = area.split()[1]
+    print(town)
+    if way == 'food':
+        travel_near = Travel.objects.filter(city = city,town = town, genre__lte = 2).order_by('-tscore')
+    elif way == 'place':
+        travel_near = Travel.objects.filter(city = city,town = town, genre__gt = 2).order_by('-tscore')
+    datas = []
+    for tn in travel_near:
+        dic = {'tour':tn.tourname, 'area':area, 'genre':tn.genre.genrename, 'cnt':tn.count, 'score':tn.score}
+        datas.append(dic)
+    return HttpResponse(json.dumps(datas), content_type = "application/json")

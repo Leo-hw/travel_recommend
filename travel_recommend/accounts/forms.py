@@ -71,6 +71,12 @@ class SignUpForm(forms.ModelForm):
  
 
 class OccuForm(ModelForm):
+    #occupations = {'선택하세요', '경영, 사무','생산, 제조','영업, 고객상담','전문직','IT, 인터넷','교육' ,'미디어','특수계층, 공공','건설','유통, 무역','서비스','디자인','의료','학생','주부','기타'}
+    occupations = ('1','2','메롱')
+    occ_no = forms.IntegerField(label='occ_no')
+    occupation = forms.CharField(label='occupation', required=True, widget=forms.Select(choices = occupations))
+    
+    print('여기는 forms',occupation)
     class Meta:
         model = Occupations
         fields = ['occ']

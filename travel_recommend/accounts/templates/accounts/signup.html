@@ -1,67 +1,48 @@
 {% extends 'base.html' %} 
 
 {% block content %}
+<script
+  src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+  integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
+  crossorigin="anonymous"></script>
+{% comment %} 
+signup_submit 기능 구현,
+css 수정
 
+{% endcomment %}
 
-<script type="text/javascript">
-window.onload = function(){
-    //alert('b');
-        document.getElementById("close").onclick = function(){
-            $("#blank_warning").hide();
+<script type = text/javascript>
+    
+    
+$(document).ready(function(){
+    //alert('a');
+    $.ajax({
+        url:'travel_site',
+        type:'get',
+        data:{'site':site, 'city':city, 'town':town},
+        dataType:'json',
+        success:fucntion(data){
+            alert('b');
+            //여기서 json 으로 받아서 
+            // if div.id == town 일 경우,
+            // if div.id in town:
+            // town == town. 
+        },
+        error:function(){
+            alert('실패');
         };
-        document.getElementById("ok").onclick = function(){
-            $("#blank_warning").hide();
-        };
-        document.getElementById("signup").onclick = function(){
-            alert('a');
-            var bool = valueCheck();
-            var bool = alert('입력부족');
-            if(bool){
-                frm.submit();
-            }
-        }
 
-};
-function valueCheck(){
-	if(frm.username.value === ''){
-		$("#blank_warning").show();
-		return false;
-	}else if (frm.password.value == ''){
-		$("#blank_warning").show();
-		return false;
-	}else if (frm.repeat_password.value == ''){
-		$("#blank_warning").show();
-		return false;
-	}else if (frm.rating1.value == ''){
-		$("#blank_warning").show();
-		return false;
-	}else if (frm.travel_site1.value == ''){
-		$("#blank_warning").show();
-		return false;
-	}else if (frm.rating2.value == ''){
-		$("#blank_warning").show();
-		return false;
-	}else if (frm.travel_site2.value == ''){
-		$("#blank_warning").show();
-		return false;
-	}else if (frm.rating3.value == ''){
-		$("#blank_warning").show();
-		return false;
-	}else if (frm.travel_site3.value == ''){
-		$("#blank_warning").show();
-		return false;
-	else{
-		return true;
-	}	
-};
+    })
+
+});
 
 
 </script>
 
 
 
-<style>
 
+<style>
 .btn {
   text-align: center;
   

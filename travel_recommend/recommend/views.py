@@ -18,7 +18,6 @@ class Top5Site(ListView):
 
 # make detail function 
 # if don't have any review, then show popular 5 places
-
 from django.views.generic import CreateView
 class ReviewCreate(CreateView):
     model = Treview

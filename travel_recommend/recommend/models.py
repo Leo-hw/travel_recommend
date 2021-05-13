@@ -19,6 +19,7 @@ tourid, city, town, name, type1, type2, type3, genre
 
 
 
+
 class Travel(models.Model):
     tourid = models.AutoField(primary_key=True)
     city = models.CharField(max_length=20, blank=True, null=True)

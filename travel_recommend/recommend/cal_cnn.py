@@ -137,7 +137,7 @@ import numpy as np
 from tensorflow import keras
 
 def baseline_cnn(activation = 'relu'):
-  max_tlen = len(max(travel_rating))
+      max_tlen = len(max(travel_rating))
   max_ulen = len(max(user_rating))
 
   # tset_size = int(travel_rating.size)

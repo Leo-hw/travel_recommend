@@ -14,6 +14,6 @@ urlpatterns = [
     # 리뷰 like
     path('reviewlike/', ReviewCreate.as_view(), name = 'create'),
     # 여행지 검색
-    path('search/', search, ),
+    path('search/', search),
     
 ]

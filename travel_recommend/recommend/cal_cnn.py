@@ -39,45 +39,11 @@ for i in range(1000):
 print(gen)
 
 # 직업
-# 직업
+
 occ = []
 for i in range(1000):
   nocc = np.random.randint(1, 16)
-  #print(nocc)
-  if nocc == 1:
-    noccs = '학생'
-  elif nocc == 2:
-    noccs = '경영,사무'
-  elif nocc == 3:
-    noccs = '영업, 고객상담'
-  elif nocc == 4:
-    noccs = '생산, 제조'
-  elif nocc == 5:
-    noccs = '전문직'
-  elif nocc == 6:
-    noccs ='IT, 인터넷'
-  elif nocc == 7:
-    noccs = '교육'
-  elif nocc == 8:
-    noccs = '미디어'
-  elif nocc == 9:
-    noccs = '특수계층, 공공'
-  elif nocc == 10:
-    noccs = '건설'
-  elif nocc == 11:
-    noccs = '유통, 무역'
-  elif nocc == 12:
-    noccs = '서비스'
-  elif nocc == 13:
-    noccs = '디자인'
-  elif nocc == 14:
-    noccs = '의료'
-  elif nocc == 15:
-    noccs = '주부'
-  else:
-    noccs= '기타'
-
-  occ.append(noccs)
+  occ.append(nocc)
 print(occ)
 
 '''
@@ -137,7 +103,7 @@ import numpy as np
 from tensorflow import keras
 
 def baseline_cnn(activation = 'relu'):
-      max_tlen = len(max(travel_rating))
+  max_tlen = len(max(travel_rating))
   max_ulen = len(max(user_rating))
 
   # tset_size = int(travel_rating.size)

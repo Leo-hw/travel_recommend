@@ -25,7 +25,7 @@ def Cal_Knn(user_id):
     
     # 1. raw dataset
     rate  = Treview.objects.all()
-    rates = rate.values('review_no', 'user_no', 'placeid', 'rating')
+    rates = rate.values('user_no', 'placeid', 'rating', 'review_no')
     
     #rating = pd.DataFrame(data = rate, columns=['treview_no', 'user_no', 'placeid', 'rating'])
     rating = pd.DataFrame.from_records(rates) 
@@ -47,14 +47,16 @@ def Cal_Knn(user_id):
     tab = rating_g.sum().unstack() # 행렬구조로 변환
     print(tab)
     #사용자 2이 가지 않은 곳, 1,15, 39....
-    #print('요기는 일다 ㄴ찍힘')
-
     
-
-    #####요기가 문제#####
+    
     # 2. rating 데이터셋 생성
     print('실행')
-    reader = Reader(rating_scale= (1, 5)) # 평점 범위
+    ### 여기 밑에 가 문제다
+    #reader = Reader(line_format='rating["user_no"] rating["placeid"] rating["rating"]', rating_scale=(0.5, 5))
+
+    ### 여기 surprise 에서 reader 에 들어가는 게 문제인거 같은데??
+    # 그 전에 쓴 거 보고 확인해봐야겠다... uuid 랑 이iid랑 float(r) 이 들어가는 건데, 왜 그런건지 모르겠넹
+    reader = Reader(rating_scale= (0.5, 5)) # 평점 범위
     data = Dataset.load_from_df(df=rating, reader=reader)
     # rating이라는 데이터프레임은 reader(1~5)의 평점 범위를 가진다.
     print('2', data)

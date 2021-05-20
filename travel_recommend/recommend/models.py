@@ -31,8 +31,8 @@ class Travel(models.Model):
 
 class Treview(models.Model):
     treview_no = models.AutoField(primary_key=True)
-    treview_id = models.CharField(max_length=20, blank=True, null=True)
-    tourid = models.IntegerField(db_column='tourid', blank=True, null=True)  # Field name made lowercase.
+    user_no = models.IntegerField(blank=True, null=True)
+    placeid = models.IntegerField(db_column='placeid', blank=True, null=True)  # Field name made lowercase.
     rating = models.IntegerField(blank=True, null=True)
     
 

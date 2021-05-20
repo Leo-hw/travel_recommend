@@ -131,9 +131,13 @@ def weather(request):
 # 계산
 def search(request):
     user_id = request.user.id
-    #print(user_id)
+    print(user_id)
     results = Cal_Knn(user_id)
-    print(results[0]['iid'].values)    
+    print('다녀왔다')
+
+    ####### 여기가 문제임.
+    #print(results)
+    print(results.loc[0]['iid'].values)    
     tlist = results[0]['iid'].values
         
     flist = []

@@ -146,7 +146,9 @@ a:active {
 	<b style="color: purple;">{{ user_log }} 님 안녕하세요</b>
 	</form>
 	</div>
-
+	<div>
+	{{ flist }}
+	</div>
 	<form action="search" method="post">{% csrf_token %}
 	<div id='search-box'>
 		<input type="text" id='search' name='search' placeholder="검색어를 입력하세요.">   

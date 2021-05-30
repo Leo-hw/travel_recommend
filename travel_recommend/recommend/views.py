@@ -129,17 +129,42 @@ def weather(request):
         print('===날짜가 없을경우===')
 
 # 계산
+# search 가 아니라 show 인 거지...
+# 그리고 
+
+class ShowResults(ListView):
+    template_name_suffix = 'search.html'
+    success_url = '/'
+
+    def dispatch(self, request, *args, **kwargs):
+        object = self.get_object()
+
+        if object.author != request.treview_id:
+            messages.warning(request, "권한이 없습니다.")
+            return HttpResponseRedirect('/')
+        else:
+            return super(ReviewUpdate, self).dispatch(request, *args, **kwargs)
+
+
+
 def search(request):
     user_id = request.user.id
     #print(user_id)
     results = Cal_Knn(user_id)
-    print(results[0]['iid'].values)    
-    tlist = results[0]['iid'].values
+    #print('다녀왔다')
+
+    print(results, type(results))
+    print(results.iloc[0:5])    
+    tlist = results.iloc[0:5]['iid'].values
         
     flist = []
     for f in tlist :
-        tour = Travel.objects.filter(placeId = f)
-        flist.append(" ".join(tour))
+        tour = Travel.objects.filter(tourid = f)
+        
+    ####### 여기가 문제임.
+        #flist.append(" ".join(tour))
+        flist.append(tour)
+
     print(type(flist))
     context = {'tour':flist}
     return render(request, 'search.html', context)

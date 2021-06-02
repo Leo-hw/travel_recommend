@@ -4,7 +4,7 @@
 calculate
 {% endblock  %}
 
-{% block body %}
+{% block content %}
 <div class = 'col'>
 <div class = 'row'></div>
 
@@ -142,8 +142,8 @@ a:active {
 <div id="header">
 	
 	<div align="right">
-	<form action="logout">
-	<b style="color: purple;">{{ user_log }} 님 안녕하세요</b>
+	<form action="logout">{% csrf_token %}
+	<b style="color: purple;">{{ user_id }} 님 안녕하세요</b>
 	</form>
 	</div>
 	<div>
@@ -167,34 +167,60 @@ a:active {
 </div>
 
 
+
 <div id='contents'>
-	<!-- 날씨 -->
-	<div id='weather'>
-	{% if weather %}
-		
-		<span><b style="color: blue;">{{start}} ~ {{end}} 날씨  →</b> 
-		{% for w in weather %}
-			<b style="color: red;">{{w}} </b>/ 
-		{% endfor %}
-		</span>
-	{% else %}
-		<h4>날짜를 설정해야 날씨가 보입니다.</h4>
-	{% endif %}
-	</div>
-	
 	<!-- 여행지 -->
 	<div id='tour-recommend'>
+	{% if travel %}
+	<div class = 'row'>
+	{% for tr in travel%}
+		<div class="col-xs-6 col-sm-3">
+		<div class = 'row'>
+		{{tr.genre3}}
+		</div>
+		<div class = 'row'>
+		{{tr.city}}
+		</div>
+		<div class = 'row'>
+		{{tr.town}}
+		</div>
+		<div class = 'row'>
+		{{tr.site}}
+		</div>
+		</div>
+	{% endfor %}
+	</div>
+	{% endif %}
+	
+{% comment %} 
+썸네일 가져오는 방법이 없는지 확인해봅시다...
+아이프레임 이용해서 가져오면 될 것 같아
+{% endcomment %}
+
+	
 	{% if tour %}
 		<h3>여행지 추천</h3>
+			<div class = 'row'>
 		{% for t in tour %}
+			<div class="col-xs-6 col-sm-3">
+			{% for r in t %}
+			
+			{{ r }}
+			
+			
+			{% endfor %}
+			</div>
+			
+			{% comment %} 				
+			{{travel.objects.get(tourid = travel.objects.values)}}
 			<div class="card card-3">
-				{{t}}
 			<input type = 'hidden' id = 'txtArea{{forloop.counter}}' value = '{{t}}'/>
 			<button type = 'button' class="btn btn-outline-secondary" id = 'btn{{forloop.counter}}'>장르기반</button>
 			<button type = 'button' class="btn btn-outline-secondary"  id = 'btn_{{forloop.counter}}'>장소기반</button>
-			</div>
 			<div id = 'showData{{forloop.counter}}'  style = 'text-align: left; padding-left: 20px;'></div>
+			 {% endcomment %}
 		{% endfor %}
+			</div>
 	{% else %}
 		<h3>검색 결과가 없습니다.</h3>
 	{% endif %}

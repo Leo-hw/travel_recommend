@@ -154,21 +154,43 @@ def search(request):
     #print('다녀왔다')
 
     print(results, type(results))
-    print(results.iloc[0:5])    
+    #print(results.iloc[0:5])    
     tlist = results.iloc[0:5]['iid'].values
-        
+       
     flist = []
+    travel = Travel.objects.all().values_list
+    count = 0
+    flist2 = []
+
     for f in tlist :
-        tour = Travel.objects.filter(tourid = f)
         
-    ####### 여기가 문제임.
-        #flist.append(" ".join(tour))
+        count += 1
+        tour = Travel.objects.filter(tourid = f)
         flist.append(tour)
+        
+        for t in travel:
+            #print(t)
+            if t.tourid == f:
+                site = t.site
+                city = t.city
+                town = t.town
+                genre1 = t.genre1
+                genre3 = t.genre3
+                tdic = {'site':site, 'city':city, 'town':town, 'genre1':genre1, 'genre3':genre3}
+                flist2.append(tdic)
+        #flist.append(" ".join(tour))
+            
+        ## poquito despues
+        # for t in travel.values:
+        #     print(t)
+        #     if tour in travel:
+        #         print(travel['iid'])
+        #         #print(travel.loc[count])
 
-    print(type(flist))
-    context = {'tour':flist}
+
+    print(flist ,type(flist))
+    context = {'tour':flist, 'user_id':user_id, 'travel':flist2}
     return render(request, 'search.html', context)
-
 '''
 treview
 treview_no, treview_id, tourid, rating, genre 

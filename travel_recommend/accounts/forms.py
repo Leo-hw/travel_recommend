@@ -76,7 +76,7 @@ class OccuForm(ModelForm):
     occ_no = forms.IntegerField(label='occ_no')
     occupation = forms.CharField(label='occupation', required=True, widget=forms.Select(choices = occupations))
     
-    print('여기는 forms',occupation)
+    #print('여기는 forms',occupation)
     class Meta:
         model = Occupations
         fields = ['occ']

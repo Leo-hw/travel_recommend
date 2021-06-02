@@ -1,3 +1,4 @@
+from django.contrib.auth.views import LoginView
 from django.http.response import HttpResponse, HttpResponseRedirect
 from .models import Occupations
 from django.views.generic.edit import DeleteView, UpdateView
@@ -10,6 +11,15 @@ from django.contrib.auth.models import User
 
 # function for signup.
 # manage accounts. login/logout and modify user info
+
+# class UserLoginView(LoginView):           # 로그인
+#     template_name = 'user/login.html'
+
+#     def form_invalid(self, form):
+#         messages.error(self.request, '로그인에 실패하였습니다.', extra_tags='danger')
+#         return super().form_invalid(form)    
+
+
 def signup(request):
 
     # login 된 상태에서 접근 안되도록 막아야 함.
@@ -36,7 +46,6 @@ def signup(request):
         #request = request.GET
         signup_form = SignUpForm() 
         #print('else error')
-                
     return render(request, 'accounts/signup.html', {'form':signup_form, 'town':town, 'city':city, 'site':site})
 
 class ShowOcc(ListView):
@@ -51,16 +60,14 @@ class ShowOcc(ListView):
     #     return super(ShowOcc, self).dispatch(request, *args, **kwargs)
 
 def viewOcc(request):
-    print('viewOcc 실행')
+    #print('viewOcc 실행')
     model = Occupations
     form_class = OccuForm
-    print('여기는 뷰스',form_class)
-    
+    #print('여기는 뷰스',form_class)
     return render(request,'accounts/show_occ.html',{'form':form_class} )
 
 def login(request):
     pass
-
     
 def logout(request):
     pass
@@ -68,13 +75,13 @@ def logout(request):
 def getTravelSite(request):
     area = request.GET['area']
     way = request.GET['way']
-    print(area, way)
+    #print(area, way)
     city = area.split()[0]
     if len(area.split()) == 3:
         town = area.split()[1] + " " + area.split()[2]
     else:
         town = area.split()[1]
-    print(town)
+    #print(town)
     if way == 'food':
         travel_near = Travel.objects.filter(city = city,town = town, genre__lte = 2).order_by('-tscore')
     elif way == 'place':

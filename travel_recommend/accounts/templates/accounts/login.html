@@ -7,16 +7,15 @@
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-    alert('submit');   
+    //alert('submit');   
 
 
-$("#target").click(function(){
+  $("#target").click(function(){
     alert('submit');
+    //$("#form").submit();
+    //$('#frm').submit();
     });
 });
-function submit(){
-    alert('submit');
-};
 
 </script>
 <style>
@@ -193,30 +192,30 @@ body {
 
 <body>
 {% comment %} 
-<div class ="row">
-    <div class="col"></div>
-    <div class = "col-6">
-        <div class = "alert alert-primary" role = "alert">
-        Please enter your login information</div>
-    <form action = "" method = "post">
-        {% csrf_token %}
-        {{form.as_p}}
-        <div class = 'row'>
-            <div class = 'col-xs-6 col-sm-4'></div>
-            <div class = 'col-xs-6 col-sm-4'>
-                <input type = "submit" value = "login" class = "btn btn-outline-primary">
-            </div>
-            <div class = 'col-xs-6 col-sm-4'></div>
-        </div>
-    </form>
-    </div>
-<div class = "col"></div>
-</div>
-{% endcomment %}
+  <div class ="row">
+      <div class="col"></div>
+      <div class = "col-6">
+          <div class = "alert alert-primary" role = "alert">
+          Please enter your login information</div>
+      <form action = "" method = "post">
+          {% csrf_token %}
+          {{form.as_p}}
+          <div class = 'row'>
+              <div class = 'col-xs-6 col-sm-4'></div>
+              <div class = 'col-xs-6 col-sm-4'>
+                  <input type = "submit" value = "login" class = "btn btn-outline-primary">
+              </div>
+              <div class = 'col-xs-6 col-sm-4'></div>
+          </div>
+      </form>
+      </div>
+    <div class = "col"></div>
+  </div>
+  {% endcomment %}
 
 <div class="login-box">
   <h2>Login</h2>
-  <form action = "" method = "post">{% csrf_token %}
+  <form action = "" method = "post" id='frm'>{% csrf_token %}
     
     {% comment %} 
     {{form.as_p}}
@@ -224,18 +223,17 @@ body {
 
     {% for field in form %}  
         <div class="form-group {% if field.errors|length > 0 %}has-error{%endif %}">
-        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-        <input name="{{ field.html_name }}" id="{{ field.id_for_lable }}" class="form-control" type="{{ field.field.widget.input_type }}" value="{{ field.value|default_if_none:'' }}">
+          <label for="{{ field.id_for_label }}" style='color:white'>{{ field.label }}</label>
+          <input name="{{ field.html_name }}" id="{{ field.id_for_lable }}" class="form-control" type="{{ field.field.widget.input_type }}" value="{{ field.value|default_if_none:'' }}">
         {% for error in field.errors %}
             <label class="control-label" for="{{ field.id_for_label }}">{{ error }}</label>
         {% endfor %}
-    </div>
+        </div>
     {% endfor %}
-    <div class="form-actions">
-    <a href = "#" onclick ="submit()" class ='target'> Login </a>
-    <button class="btn btn-primary btn-large" type="submit">로그인하기</button>
-    </div>
- 
+      <div class="form-actions">
+        <a href = "#" onclick ="submit()" class ='target'> Login </a>
+      </div>
+  
     
 {% comment %}     
     <div class="user-box">
@@ -247,7 +245,6 @@ body {
         <label>Password</label>
     </div>
     <input type = "submit" value = "login" class = "btn btn-outline-primary">
-     {% endcomment %}
 
     <a href="/">
         <span></span>
@@ -256,6 +253,7 @@ body {
         <span></span>
         Submit
     </a>
+     {% endcomment %}
 
     {% comment %} 
     <a href="#">

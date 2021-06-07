@@ -1,4 +1,4 @@
-from .views import ReviewCreate, ReviewDelete, Top5Site, search
+from .views import ReviewCreate, ReviewDelete, Top5Site, search, recom
 from django.urls import path
 
 app_name = "recommend"
@@ -14,6 +14,6 @@ urlpatterns = [
     # 리뷰 like
     path('reviewlike/', ReviewCreate.as_view(), name = 'create'),
     # 여행지 검색
-    path('search/', search, name = 'search'),
+    path('recom/', search, name = 'recom'),
     
 ]

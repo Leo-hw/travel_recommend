@@ -148,9 +148,12 @@ class ShowResults(ListView):
 
 
 
-def search(request):
+def recom(request):
     user_id = request.user.id
     #print(user_id)
+
+    ### udate 확인 후 동일 할 경우 안다녀오고, 다를 경우 다녀와서 업데이트 하는 거 추가해야함###
+
     results = Cal_Knn(user_id)
     #print('다녀왔다')
 
@@ -190,7 +193,11 @@ def search(request):
 
     print(flist ,type(flist))
     context = {'tour':flist, 'user_id':user_id, 'travel':flist2}
-    return render(request, 'search.html', context)
+    return render(request, 'recom.html', context)
+
+
+def search(request):
+    pass
 
 '''
 treview

@@ -13,7 +13,8 @@ def Cal_Knn(user_id):
     
     user = Usert.objects.all()
     travel = Travel.objects.all()
-    
+    print(type(travel))
+
     travels = travel.values('tourid', 'city', 'town', 'site', 'genre1', 'genre2','genre3')
     #print(travels)
     '''
@@ -88,4 +89,7 @@ def Cal_Knn(user_id):
     result = ddff.sort_values(by='est', ascending=False)[:5]
     
     #print(result)
+    
+
+
     return result

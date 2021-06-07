@@ -4,7 +4,22 @@
 {% endblock %}
 
 {% block content  %}
-	<form action="search/" method="post">{% csrf_token %}
+<div class='row'><br></div>
+	<form action="recom/" method="post">{% csrf_token %}
+	
+	<div id='search-box'>
+	{% if user.is_authenticated %}
+		<button type = "submit"> 추천 여행지 보기 </button>
+	{% else %}
+		<div class = 'row'>
+			<div class = 'row'></div>
+		
+		</div>
+	{% endif %}
+	</div>
+	<br>
+	
+<form action="search/" method="post">{% csrf_token %}
 	<div id='search-box'>
 	{% if user.is_authenticated %}
 		<input type="text" id='search' name='search' placeholder="검색어를 입력하세요." style="align:center">   
@@ -14,14 +29,11 @@
 			<div class = 'row'></div>
 		</div>
 	{% endif %}
-		<!--
-		<button type="submit" id='search-icon'>
-			<img src="./static/image/search.png" style="width: 30px; height: 30px;">
-        </button>
-		-->
+
 	</div>
 	<br>
-	
+
+
 	{% if user.is_authenticated %}
 		<input type='date' id='start_date' name='start_date'/>
 		&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;

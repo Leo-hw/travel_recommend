@@ -8,6 +8,7 @@ from django.views.generic.edit import DeleteView, UpdateView
 from .models import Travel, Treview #, Tuser
 from django.shortcuts import redirect, render
 from django.views.generic.list import ListView
+import pandas as pd
 
 print('views 실행')
 
@@ -147,7 +148,7 @@ class ShowResults(ListView):
 
 
 
-def search(request):
+def recom(request):
     user_id = request.user.id
     #print(user_id)
     results = Cal_Knn(user_id)
@@ -158,10 +159,9 @@ def search(request):
     tlist = results.iloc[0:5]['iid'].values
        
     flist = []
-    travel = Travel.objects.all().values_list
+    travel = Travel.objects.all()
     count = 0
-    flist2 = []
-
+    flist2=[]
     for f in tlist :
         
         count += 1
@@ -191,6 +191,9 @@ def search(request):
     print(flist ,type(flist))
     context = {'tour':flist, 'user_id':user_id, 'travel':flist2}
     return render(request, 'search.html', context)
+    
+def search(request):
+    return render(request, 'search.html')
 '''
 treview
 treview_no, treview_id, tourid, rating, genre 

@@ -123,6 +123,7 @@ def baseline_cnn(activation = 'relu'):
   # define input1
   #input1 = Embedding()
   model = Model
+  
   '''  
   encode_u= Conv1D(filters=NUM_FILTERS, kernel_size=FILTER_LENGTH1, activation='relu', padding='valid', strides=1)(Uinput) 
   #encode_u = Conv1D(filters=NUM_FILTERS*2, kernel_size=FILTER_LENGTH1, activation='relu', padding='valid', strides=1)(encode_u) 

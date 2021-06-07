@@ -1,8 +1,9 @@
 from re import T
+from .views import signup
 
 from django.forms.models import ModelForm
-from .models import Occupations
-from .models import Tuser
+from .models import Occupations, Tuser
+
 from .widgets import TownListSelect, AutoCompleteWidget
 from django import forms
 from django.forms import fields, widgets
@@ -24,6 +25,7 @@ config = {
 conn = MySQLdb.connect(**config)
 
 class SignUpForm(forms.ModelForm):
+    
     model = Tuser
         
     # define fields 
@@ -76,7 +78,7 @@ class OccuForm(ModelForm):
     occ_no = forms.IntegerField(label='occ_no')
     occupation = forms.CharField(label='occupation', required=True, widget=forms.Select(choices = occupations))
     
-    print('여기는 forms',occupation)
+    #print('여기는 forms',occupation)
     class Meta:
         model = Occupations
         fields = ['occ']

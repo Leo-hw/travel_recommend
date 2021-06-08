@@ -13,10 +13,10 @@ def Cal_Knn(user_id):
     
     user = Usert.objects.all()
     travel = Travel.objects.all()
-    print(type(travel))
+    #print(type(travel))
 
     travels = travel.values('tourid', 'city', 'town', 'site', 'genre1', 'genre2','genre3')
-    #print(travels)
+    #print(travels,type(travels))
     '''
     qs = SomeModel.objects.select_related().filter(date__year=2012)
     q = qs.values('date', 'OtherField')
@@ -27,7 +27,7 @@ def Cal_Knn(user_id):
     rate  = Treview.objects.all()
     rates = rate.values('treview_no', 'user_no', 'placeid', 'rating')
     #print(rate, type(rate))
-    #rating = pd.DataFrame(data = rate, columns=['treview_no', 'user_no', 'placeid', 'rating'])
+    #rating = pd.DataFrame(data = rate, columns=['review_no', 'user_no', 'placeid', 'rating'])
     rating = pd.DataFrame.from_records(rates)
     rating.drop('treview_no', axis=1, inplace=True)
     #print(rating.head())   #   critic(user)   title(item)   rating

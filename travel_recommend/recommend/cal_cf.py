@@ -5,17 +5,22 @@ from .cal_knn import Cal_Knn
 
 user_id = 1
 
-def start(result):
+def Cal_Cf(user_id):
     user_no = user_id
-    place1 = result[1]
-    sql = 'insert into tresult(user_no, ) values()'
-    date1 = Tresult.objects.filter('udate')    
-    date2 = Treview.objects.filter('udate')
     results = Cal_Knn(user_id)
+    place1 = results[1]
+    sql = 'insert into tresult(user_no,place, udate) values(%s, %s, %s)'
+    
+    tresult = Tresult(udate='sysdate()')
+    
+    #date1 = Tresult.objects.filter('udate')    
+    date2 = Treview.objects.filter('udate')
 
 
     return 'success'
 
+#start(user_id)
+#####
 
 
 

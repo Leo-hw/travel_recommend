@@ -73,14 +73,9 @@ class Usert(models.Model):
 
 class Tresult(models.Model):
     user_no = models.ForeignKey('Tuser', models.DO_NOTHING, db_column='user_no', blank=True, null=True)
-    place1 = models.IntegerField(db_column='PLACE1', blank=True, null=True)  # Field name made lowercase.
-    place2 = models.IntegerField(db_column='PLACE2', blank=True, null=True)  # Field name made lowercase.
-    place3 = models.IntegerField(db_column='PLACE3', blank=True, null=True)  # Field name made lowercase.
-    place4 = models.IntegerField(db_column='PLACE4', blank=True, null=True)  # Field name made lowercase.
-    place5 = models.IntegerField(db_column='PLACE5', blank=True, null=True)  # Field name made lowercase.
-    udate = models.DateTimeField(db_column='UDATE', blank=True, null=True)  # Field name made lowercase.
+    placeid = models.IntegerField(blank=True, null=True)
+    udate = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'tresult'
-

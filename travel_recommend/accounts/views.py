@@ -41,11 +41,12 @@ def signup(request):
             user_instance.save()
             return render(request, 'accounts/singup_complete.html', {'username':user_instance.username})
         
-        
+        else:
+            print('signupform is unvalid')
     else:
         #request = request.GET
         signup_form = SignUpForm() 
-        #print('else error')
+        print('else error')
     return render(request, 'accounts/signup.html', {'form':signup_form, 'town':town, 'city':city, 'site':site})
 
 class ShowOcc(ListView):

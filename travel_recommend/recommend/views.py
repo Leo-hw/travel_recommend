@@ -1,3 +1,4 @@
+from .cal_cf import Cal_Cf
 from .weather import Weather
 from .cal_knn import Cal_Knn
 from django.contrib import messages
@@ -5,7 +6,7 @@ from django.db.models import fields
 from django.http.response import HttpResponseRedirect
 from django.views.generic.base import View
 from django.views.generic.edit import DeleteView, UpdateView
-from .models import Travel, Treview #, Tuser
+from .models import Travel, Tresult, Treview #, Tuser
 from django.shortcuts import redirect, render
 from django.views.generic.list import ListView
 import pandas as pd
@@ -157,10 +158,10 @@ def recom(request):
     results = Cal_Knn(user_id)
     #print('다녀왔다')
 
-    print(results, type(results))
+    #print(results, type(results))
     #print(results.iloc[0:5])    
     tlist = results.iloc[0:5]['iid'].values
-        
+       
     flist = []
     travel = Travel.objects.all()
     count = 0
@@ -194,11 +195,29 @@ def recom(request):
     print(flist ,type(flist))
     context = {'tour':flist, 'user_id':user_id, 'travel':flist2}
     return render(request, 'recom.html', context)
-
-
+    
 def search(request):
-    pass
+    return render(request, 'search.html')
 
+def calc(request):
+    user_id = request.user.id
+    print(user_id)
+    tre = Tresult.objects.all()
+    trev = Treview.objects.all()
+    # udate1 = Tresult.objects.filter(user_no=user_id)
+    # udate2 = Treview.objects.filter(user_no=user_id)
+    #print('udate1:', udate1,  '\t udate2:', udate2)
+    print('tresult:', tre, '\ttreview',trev)
+    # if udate1 == udate2:
+    #     print('업데이트 필요 x')
+    #     results = Tresult.objects.all()
+    # else:
+    #     results = Cal_Cf(user_id)
+    # print(results)
+    
+    
+    
+    return render(request, 'calc.html')
 '''
 treview
 treview_no, treview_id, tourid, rating, genre 

@@ -6,15 +6,28 @@
 <head>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
+<<<<<<< HEAD
 $(document).ready(function(){
     //alert('submit');   
+=======
+>>>>>>> 12719b50fc93c4f8f5568f4b3fc26664f2048a58
 
+$(document).ready(function(){
+   // alert('submit');   
 
+<<<<<<< HEAD
   $("#target").click(function(){
     alert('submit');
     //$("#form").submit();
     //$('#frm').submit();
+=======
+/*
+  $("#target").click(function(){
+    
+    $("#login").submit();
+>>>>>>> 12719b50fc93c4f8f5568f4b3fc26664f2048a58
     });
+*/
 });
 
 </script>
@@ -230,10 +243,20 @@ body {
         {% endfor %}
         </div>
     {% endfor %}
-      <div class="form-actions">
-        <a href = "#" onclick ="submit()" class ='target'> Login </a>
-      </div>
-  
+    <div class="form-actions">
+    <a href = "#" onclick ="submit()" class ='target'> 
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      Login 
+    </a>
+
+    <!--
+    -->
+    <button class="btn btn-primary btn-large" type="submit">로그인하기</button>
+    </div>
+ 
     
 {% comment %}     
     <div class="user-box">

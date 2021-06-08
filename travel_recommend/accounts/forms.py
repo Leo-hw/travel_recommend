@@ -12,6 +12,9 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 #from .models import User
 import MySQLdb
 
+
+
+
 config = {
     'host':'127.0.0.1',
     'user':'root',
@@ -24,6 +27,7 @@ config = {
 conn = MySQLdb.connect(**config)
 
 class SignUpForm(forms.ModelForm):
+    
     model = Tuser
         
     # define fields 

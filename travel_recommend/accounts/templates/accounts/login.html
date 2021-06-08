@@ -193,26 +193,26 @@ body {
 
 <body>
 {% comment %} 
-<div class ="row">
-    <div class="col"></div>
-    <div class = "col-6">
-        <div class = "alert alert-primary" role = "alert">
-        Please enter your login information</div>
-    <form action = "" method = "post">
-        {% csrf_token %}
-        {{form.as_p}}
-        <div class = 'row'>
-            <div class = 'col-xs-6 col-sm-4'></div>
-            <div class = 'col-xs-6 col-sm-4'>
-                <input type = "submit" value = "login" class = "btn btn-outline-primary">
-            </div>
-            <div class = 'col-xs-6 col-sm-4'></div>
-        </div>
-    </form>
-    </div>
-<div class = "col"></div>
-</div>
-{% endcomment %}
+  <div class ="row">
+      <div class="col"></div>
+      <div class = "col-6">
+          <div class = "alert alert-primary" role = "alert">
+          Please enter your login information</div>
+      <form action = "" method = "post">
+          {% csrf_token %}
+          {{form.as_p}}
+          <div class = 'row'>
+              <div class = 'col-xs-6 col-sm-4'></div>
+              <div class = 'col-xs-6 col-sm-4'>
+                  <input type = "submit" value = "login" class = "btn btn-outline-primary">
+              </div>
+              <div class = 'col-xs-6 col-sm-4'></div>
+          </div>
+      </form>
+      </div>
+    <div class = "col"></div>
+  </div>
+  {% endcomment %}
 
 <div class="login-box">
   <h2>Login</h2>
@@ -229,7 +229,7 @@ body {
         {% for error in field.errors %}
             <label class="control-label" for="{{ field.id_for_label }}">{{ error }}</label>
         {% endfor %}
-    </div>
+        </div>
     {% endfor %}
     <div class="form-actions">
     <a href = "#" onclick ="submit()" class ='target'> 

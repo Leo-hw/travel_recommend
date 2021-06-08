@@ -1,9 +1,8 @@
 from re import T
-from .views import signup
 
 from django.forms.models import ModelForm
-from .models import Occupations, Tuser
-
+from .models import Occupations
+from .models import Tuser
 from .widgets import TownListSelect, AutoCompleteWidget
 from django import forms
 from django.forms import fields, widgets
@@ -12,6 +11,9 @@ from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 #from .models import User
 import MySQLdb
+
+
+
 
 config = {
     'host':'127.0.0.1',

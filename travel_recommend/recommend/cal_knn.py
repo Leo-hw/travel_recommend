@@ -88,4 +88,7 @@ def Cal_Knn(user_id):
     result = ddff.sort_values(by='est', ascending=False)[:5]
     
     #print(result)
+    
+
+
     return result

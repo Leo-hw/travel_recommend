@@ -12,12 +12,12 @@ from django.contrib.auth.models import User
 # function for signup.
 # manage accounts. login/logout and modify user info
 
-# class UserLoginView(LoginView):           # 로그인
-#     template_name = 'user/login.html'
-
-#     def form_invalid(self, form):
-#         messages.error(self.request, '로그인에 실패하였습니다.', extra_tags='danger')
-#         return super().form_invalid(form)    
+class UserLoginView(LoginView):           # 로그인
+    template_name = 'user/login.html'
+    
+    def form_invalid(self, form):
+        messages.error(self.request, '로그인에 실패하였습니다.', extra_tags='danger')
+        return super().form_invalid(form)    
 
 
 def signup(request):
@@ -66,12 +66,6 @@ def viewOcc(request):
     form_class = OccuForm
     #print('여기는 뷰스',form_class)
     return render(request,'accounts/show_occ.html',{'form':form_class} )
-
-def login(request):
-    pass
-    
-def logout(request):
-    pass
 
 def getTravelSite(request):
     area = request.GET['area']

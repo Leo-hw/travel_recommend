@@ -1,3 +1,4 @@
+from travel_recommend.recommend.cal_cf import Cal_Cf
 from .weather import Weather
 from .cal_knn import Cal_Knn
 from django.contrib import messages
@@ -5,7 +6,7 @@ from django.db.models import fields
 from django.http.response import HttpResponseRedirect
 from django.views.generic.base import View
 from django.views.generic.edit import DeleteView, UpdateView
-from .models import Travel, Treview #, Tuser
+from .models import Travel, Tresult, Treview #, Tuser
 from django.shortcuts import redirect, render
 from django.views.generic.list import ListView
 import pandas as pd
@@ -151,6 +152,9 @@ class ShowResults(ListView):
 def recom(request):
     user_id = request.user.id
     #print(user_id)
+
+    ### udate 확인 후 동일 할 경우 안다녀오고, 다를 경우 다녀와서 업데이트 하는 거 추가해야함###
+
     results = Cal_Knn(user_id)
     #print('다녀왔다')
 
@@ -190,10 +194,26 @@ def recom(request):
 
     print(flist ,type(flist))
     context = {'tour':flist, 'user_id':user_id, 'travel':flist2}
-    return render(request, 'search.html', context)
+    return render(request, 'recom.html', context)
     
 def search(request):
     return render(request, 'search.html')
+
+def calc(request):
+    user_id = request.user.id
+    
+    udate1 = Tresult.objects.filter('udate')
+    udate2 = Treview.objects.filter('udate')
+    if udate1 == udate2:
+        print('업데이트 필요 x')
+        results = Tresult.objects.all()
+    else:
+        results = Cal_Cf(user_id)
+    print(results)
+    
+    
+    
+    return render(request, 'calc.html')
 '''
 treview
 treview_no, treview_id, tourid, rating, genre 

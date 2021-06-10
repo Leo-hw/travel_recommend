@@ -35,16 +35,15 @@ class Travel(models.Model):
 
 
 class Treview(models.Model):
-    treview_no = models.AutoField(primary_key=True)
-    user_no = models.IntegerField(blank=True, null=True)
-    placeid = models.IntegerField(db_column='placeid', blank=True, null=True)  # Field name made lowercase.
-    rating = models.IntegerField(blank=True, null=True)
-    
+    user_no = models.ForeignKey('Tuser', models.DO_NOTHING, db_column='user_no', blank=True, null=True)
+    placeid = models.ForeignKey(Travel, models.DO_NOTHING, db_column='placeid', blank=True, null=True)
+    rating = models.FloatField(blank=True, null=True)
+    review_no = models.AutoField(primary_key=True)
+    udate = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'treview'
-
 
 class Tuser(models.Model):
     user_no = models.AutoField(primary_key=True)

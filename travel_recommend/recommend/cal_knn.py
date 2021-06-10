@@ -25,11 +25,12 @@ def Cal_Knn(user_id):
     
     # 1. raw dataset
     rate  = Treview.objects.all()
-    rates = rate.values('treview_no', 'user_no', 'placeid', 'rating')
+    rates = rate.values('review_no', 'user_no', 'placeid', 'rating', 'udate')
     #print(rate, type(rate))
     #rating = pd.DataFrame(data = rate, columns=['review_no', 'user_no', 'placeid', 'rating'])
     rating = pd.DataFrame.from_records(rates)
-    rating.drop('treview_no', axis=1, inplace=True)
+    rating.drop('review_no', axis=1, inplace=True)
+    rating.drop('udate', axis=1, inplace=True)
     #print(rating.head())   #   critic(user)   title(item)   rating
     
     #print(user_id)

@@ -56,49 +56,11 @@
   	<div id='contents'>
 		<!-- 여행지 -->
 		<div id='tour-recommend'>
-			{% if travel %}
-				<div class = 'row'>
-					<div class = 'col'>
-					{% for tr in travel%}
-						<div class="col-xs-1 col-md-1">
-						<div class = 'row'>
-							{{tr.genre3}}
-						</div>
-						<div class = 'row'>
-							{{tr.city}}
-						</div>
-						<div class = 'row'>
-							{{tr.town}}
-						</div>
-						<div class = 'row'>
-							{{tr.site}}
-						</div>
-					</div>
-					{% endfor %}
-				</div>
-			{% endif %}
+		
 		</div>
 		<div class = 'col-md-4 col-md-offset-4'>
 		</div>
-	{% comment %} 
-	썸네일 가져오는 방법이 없는지 확인해봅시다...
-	아이프레임 이용해서 가져오면 될 것 같아
-	{% endcomment %}
-
-		{% if tour %}
-			<h3>여행지 추천</h3>
-				<div class = 'row'>
-					{% for t in tour %}
-						<div class="col-xs-1 col-md-1">
-							{% for r in t %}
-								{{ r }}
-							{% endfor %}
-						</div>
-					{% endfor %}
-				</div>
-		{% else %}
-			<h3>검색 결과가 없습니다.</h3>
-		{% endif %}
+	
 		</div>
 	</div>
 </div>

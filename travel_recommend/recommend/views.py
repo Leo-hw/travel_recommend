@@ -10,8 +10,11 @@ from .models import Travel, Tresult, Treview #, Tuser
 from django.shortcuts import redirect, render
 from django.views.generic.list import ListView
 import pandas as pd
+import pymysql
 
-print('views 실행')
+conn = pymysql.connect(host='127.0.0.1', user='root', password='123',  db='test', charset='utf8')
+curs = conn.cursor()
+conn.commit()
 
 # first page(index)
 class Top5Site(ListView):
@@ -202,12 +205,24 @@ def search(request):
 def calc(request):
     user_id = request.user.id
     print(user_id)
-    tre = Tresult.objects.all()
+    
+    print('쁘야호!!!!')
+    sql = 'select * from tresult where user_no = %s'
+    curs.execute(sql, (user_id,))
+    tresult = pd.DataFrame(curs.fetchall(), columns=['user_no', 'placeid', 'udate'])
+    tresult = Tresult.objects.all()
+    for t in tresult:
+        print(t)
+    
+    # print(tre)
     trev = Treview.objects.all()
-    # udate1 = Tresult.objects.filter(user_no=user_id)
+    print(trev)
+    # print('tresult:', tre, '\t','treview',trev)
+    
+
+    # udate1 = Tresult.objects.filter(user_no=)
     # udate2 = Treview.objects.filter(user_no=user_id)
-    #print('udate1:', udate1,  '\t udate2:', udate2)
-    print('tresult:', tre, '\ttreview',trev)
+    # print('udate1:', udate1,  '\t udate2:', udate2)
     # if udate1 == udate2:
     #     print('업데이트 필요 x')
     #     results = Tresult.objects.all()

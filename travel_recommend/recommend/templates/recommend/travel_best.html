@@ -7,7 +7,7 @@
 <div class='row'><br></div>
 	<form action="recom/" method="post">{% csrf_token %}
 	
-	<div id='search-box'>
+	<div id='recom-box'>
 	{% if user.is_authenticated %}
 		<button type = "submit"> 추천 여행지 보기 </button>
 	{% else %}
@@ -18,7 +18,23 @@
 	{% endif %}
 	</div>
 	<br>
+</form>
+
+	<form action="calc/" method="post">{% csrf_token %}
 	
+	<div id='calc-box'>
+	{% if user.is_authenticated %}
+		<button type = "submit"> 추천 여행지 저장된 거 보기 </button>
+	{% else %}
+		<div class = 'row'>
+			<div class = 'row'></div>
+		
+		</div>
+	{% endif %}
+	</div>
+	<br>
+	</form>
+
 <form action="search/" method="post">{% csrf_token %}
 	<div id='search-box'>
 	{% if user.is_authenticated %}

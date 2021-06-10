@@ -11,6 +11,9 @@ from django.shortcuts import redirect, render
 from django.views.generic.list import ListView
 import pandas as pd
 import pymysql
+import numpy as np
+from datetime import datetime, timedelta, timezone
+import time
 
 conn = pymysql.connect(host='127.0.0.1', user='root', password='123',  db='test', charset='utf8')
 curs = conn.cursor()
@@ -203,36 +206,106 @@ def search(request):
     return render(request, 'search.html')
 
 def calc(request):
-    user_id = request.user.id
-    print(user_id)
     
-    print('쁘야호!!!!')
+    user_id = request.user.id
+    #print(user_id)
+    
+    ### get tresult table from local db.///
     sql = 'select * from tresult where user_no = %s'
     curs.execute(sql, (user_id,))
     tresult = pd.DataFrame(curs.fetchall(), columns=['user_no', 'placeid', 'udate'])
-    tresult = Tresult.objects.all()
-    for t in tresult:
-        print(t)
     
-    # print(tre)
-    trev = Treview.objects.all()
-    print(trev)
-    # print('tresult:', tre, '\t','treview',trev)
+    ### get treview table from local db
+    trev = pd.DataFrame(Treview.objects.filter(user_no = user_id).values())
     
+    # print(trev, len(trev))
+    # print(np.max(trev['udate']))
+    
+    ### check updated date
+    udate1 = np.max(tresult['udate'])
+    udate2 = np.max(trev['udate'])
+    
+    ### match timezone for comparing.
+    udate1 = udate1.replace(tzinfo=None)
+    udate2 = udate2.replace(tzinfo=None)
+        
+    sal = udate1 - udate2
+    
+    ### check if udate is not updated /// Make it can't be modified if it hasn't been 1 hour since the update
 
-    # udate1 = Tresult.objects.filter(user_no=)
-    # udate2 = Treview.objects.filter(user_no=user_id)
-    # print('udate1:', udate1,  '\t udate2:', udate2)
-    # if udate1 == udate2:
-    #     print('업데이트 필요 x')
-    #     results = Tresult.objects.all()
-    # else:
-    #     results = Cal_Cf(user_id)
-    # print(results)
-    
-    
-    
-    return render(request, 'calc.html')
+    # need to check this out, the way how to make it have a efficiency.
+    # eg. if it is same as the result.. nop. 
+    # in this case, need to figure it out, what is more affect to 'calculating' with KNN algorithm (including if will using CNN or LSTM then )
+
+    if sal > timedelta(hours = 1):
+        ### recalcultate.
+        
+        results = Cal_Knn(user_id)
+        tlist = results.iloc[0:5]['iid'].values
+        #print(tlist, type(tlist))
+        ### sql 
+        isql = 'update tresult set placeid = %s where user_no =%s and placeid = %s'
+
+        ### values in tlist is result of knn algorithms
+        newplace = results.iloc[0:5]['iid']
+        oldplace = tresult['placeid']
+
+        for n in newplace:
+            #print(n)
+            
+            if n not in oldplace:
+                for o in oldplace:
+                    #print(o)
+                    curs.execute(isql,(n, user_id, o))
+        curs.close()
+        conn.close()
+
+        flist = []
+        travel = Travel.objects.all()
+        count = 0
+        flist2=[]
+        for f in tlist :
+            count += 1
+            tour = Travel.objects.filter(tourid = f)
+            flist.append(tour)
+            
+            for t in travel:
+                #print(t)
+                if t.tourid == f:
+                    site = t.site
+                    city = t.city
+                    town = t.town
+                    genre1 = t.genre1
+                    genre3 = t.genre3
+                    tdic = {'site':site, 'city':city, 'town':town, 'genre1':genre1, 'genre3':genre3}
+                    flist2.append(tdic)
+            
+
+        print(flist ,type(flist))
+        context = {'tour':flist, 'user_id':user_id, 'travel':flist2}
+        return render(request, 'calc.html', context)    
+        
+    else:
+        print('쁘나잇')
+        # 여기는 결괏값 그대로 가져오는 거지?
+        tresult = Tresult.objects.filter(user_no = user_id)
+        print(tresult, type(tresult))
+
+        blist = []
+        blist2 = []
+        for f in tresult:
+            print(f)
+            travel = Travel.objects.filter(tourid = f)
+            for t in travel:
+                site = t.site
+                city = t.city
+                town = t.town
+                genre1 = t.genre1
+                genre3 = t.genre3
+                tdic = {'site':site, 'city':city, 'town':town, 'genre1':genre1, 'genre3':genre3}
+                blist.append(tdic)
+        context = {'tour':blist, 'user_id':user_id, 'travel':blist2}
+    return render(request, 'calc.html', context)
 '''
 treview
 treview_no, treview_id, tourid, rating, genre 

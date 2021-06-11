@@ -15,6 +15,8 @@ from django.views.generic.list import ListView
 import pandas as pd
 import pymysql
 import numpy as np
+from datetime import datetime, timedelta, timezone
+import time
 
 conn = pymysql.connect(host='127.0.0.1', user='root', password='123',  db='test', charset='utf8')
 curs = conn.cursor()
@@ -78,9 +80,6 @@ class ReviewDelete(DeleteView):
 # 도시를 일단 입력하면 도시는 있으니,까, 도시 내에서 가장 방문수가 많은 곳으로 가면 되겠지.
 # 아 근데 이러면 오래 걸리잖아....???????? visit_count 컬럼도 하나 만들어서 방문수도 넣어야하나....?
 
-# city가 도시가 아니라 도, 행정구역 구분인데, 흠... 
-# 아니면 아예 로그인 안한 상태에서는 검색 창이 안보이고
-
 # 도 별로 버튼 누를 수 있게 해두고, 베스트 여행지만 누를 수 있도록 하는거, 이거는 회원한테도 보이게 해도 상관없겠다.
 
 # weather
@@ -98,7 +97,6 @@ def weather(request):
         weather = ''
         
     wlist = []
-    # 날씨 출력  // 이거 수정해야한다던데..
     try:
         weather = Weather(search)
         query = (weather['date'] >= start_date) & (weather['date'] <= end_date)
@@ -137,9 +135,6 @@ def weather(request):
     except: 
         print('===날짜가 없을경우===')
 
-# 계산
-# search 가 아니라 show 인 거지...
-# 그리고 
 
 class ShowResults(ListView):
     template_name_suffix = 'search.html'
@@ -207,38 +202,154 @@ def search(request):
     return render(request, 'search.html')
 
 def calc(request):
+    
     user_id = request.user.id
-    print(user_id)
+    #print(user_id)
     
-    sql = 'select * from tresult where user_no = %s'
-    curs.execute(sql, (user_id,))
+    ### get tresult table from local db.///
+    # Don't know why is not working with django ORM
+    
+    tsql = 'select * from tresult where user_no = %s'
+    bsql = 'select * from tresult where user_no = %s'
+
+    curs.execute(tsql, (user_id))
     tresult = pd.DataFrame(curs.fetchall(), columns=['user_no', 'placeid', 'udate'])
-    #tresult = Tresult.objects.all()
-    # print(tresult['udate'], type(tresult))
-    # print(np.max(tresult['udate']))
     
+    curs.execute(bsql, (user_id))
+    bresult = pd.DataFrame(curs.fetchall(), columns=['user_no', 'placeid', 'udate'])
+    
+    # Tresult and Bresult 
+    # if it have the same placeid then don't calculate and just load db.
+    if list(tresult['placeid']) == list(bresult['placeid']):
+        print('all the same')
+        
+
+    # else: check the udate 1st(sal1) and 2nd(sal2).
+    # using this for copy table
+    # INSERT INTO new_table SELECT * FROM source_table;
+    
+    ### get treview table from local db
     trev = pd.DataFrame(Treview.objects.filter(user_no = user_id).values())
     
     # print(trev, len(trev))
     # print(np.max(trev['udate']))
     
-    # check updated date
+    ### check updated date
     udate1 = np.max(tresult['udate'])
-    udate2 = datetime(np.max(trev['udate']))
-    #delta = udate2 - udate1
-    #sla = datetime(udate1) - datetime(udate2)
-    print('udate1: ', udate1, 'udate2: ',udate2, type(udate1), type(udate2))
+    udate2 = np.max(trev['udate'])
     
-    #print(udate1.strftime('%Y-%m-%d %H:%M')-udate2.strftime('%Y-%m-%d %H:%M'))
-    #print(datetime(udate1)-datetime(udate2))
-    #udate1.strptime()
+    ### match timezone for comparing.
+    udate1 = udate1.replace(tzinfo=None)
+    udate2 = udate2.replace(tzinfo=None)
+        
+    sal = udate1 - udate2
+    sal2 = datetime.now() - udate1
+    print(sal2)
+    ### check if udate is not updated /// Make it can't be modified if it hasn't been 1 hour since the update
+
+    # need to check this out, the way how to make it have a efficiency.
+    # eg. if it is same as the result.. nop. 
+    # in this case, need to figure it out, what is more affect to 'calculating' with KNN algorithm (including if will using CNN or LSTM then )
+
+# 
+
+    if sal2 > timedelta(hours = 1):
     
-    print(udate1-udate2)
-    if datetime(udate1) == datetime(udate2):
-        print('equal')
+        print('hi')
+        usql = 'update tresult set placeid = %s, udate = sysdate() where user_no =%s and placeid = %s'
+        
+        results = Cal_Knn(user_id)
+        
+
+
+
+
+        ### values in tlist is result of knn algorithms
+        newplace = results.iloc[0:5]['iid']
+        oldplace = tresult['placeid']
+
+        for n in newplace:
+            #print(n)
+            
+            if n not in oldplace:
+                for o in oldplace:
+                    #print(o)
+                    curs.execute(usql,(n, user_id, o))
+        curs.close()
+        conn.close()
+
+    elif sal > timedelta(days = 1):
+        ### recalcultate.
+        
+        results = Cal_Knn(user_id)
+        tlist = results.iloc[0:5]['iid'].values
+        #print(tlist, type(tlist))
+        ### sql 
+        isql = 'update tresult set placeid = %s where user_no =%s and placeid = %s'
+
+        ### values in tlist is result of knn algorithms
+        newplace = results.iloc[0:5]['iid']
+        oldplace = tresult['placeid']
+
+        for n in newplace:
+            #print(n)
+            
+            if n not in oldplace:
+                for o in oldplace:
+                    #print(o)
+                    curs.execute(isql,(n, user_id, o))
+        curs.close()
+        conn.close()
+
+        flist = []
+        travel = Travel.objects.all()
+        count = 0
+        flist2=[]
+        for f in tlist :
+            count += 1
+            tour = Travel.objects.filter(tourid = f)
+            flist.append(tour)
+            
+            for t in travel:
+                #print(t)
+                if t.tourid == f:
+                    site = t.site
+                    city = t.city
+                    town = t.town
+                    genre1 = t.genre1
+                    genre3 = t.genre3
+                    tdic = {'site':site, 'city':city, 'town':town, 'genre1':genre1, 'genre3':genre3}
+                    flist2.append(tdic)
+            
+
+        print(flist ,type(flist))
+        context = {'tour':flist, 'user_id':user_id, 'travel':flist2}
+        return render(request, 'calc.html', context)    
+        
     else:
-        print('diff')
-    return render(request, 'calc.html')
+        ### get tresult table from local db.///
+        sql = 'select * from tresult where user_no = %s'
+        curs.execute(sql, (user_id,))
+        tresult = pd.DataFrame(curs.fetchall(), columns=['user_no', 'placeid', 'udate'])
+        
+        #tresult = Tresult.objects.filter(user_no = user_id)
+        print(tresult, type(tresult))
+
+        blist = []
+        blist2 = []
+        for f in tresult:
+            print(f)
+            travel = Travel.objects.filter(tourid = f)
+            for t in travel:
+                site = t.site
+                city = t.city
+                town = t.town
+                genre1 = t.genre1
+                genre3 = t.genre3
+                tdic = {'site':site, 'city':city, 'town':town, 'genre1':genre1, 'genre3':genre3}
+                blist.append(tdic)
+        context = {'tour':blist, 'user_id':user_id, 'travel':blist2}
+    return render(request, 'calc.html', context)
 '''
 treview
 treview_no, treview_id, tourid, rating, genre 

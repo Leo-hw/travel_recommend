@@ -89,7 +89,7 @@ def Cal_Knn(user_id):
     # 유저 1 추천 여행지 상위 5개
     result = ddff.sort_values(by='est', ascending=False)[:5]
     
-    #print(result)
+    # print('cal knn', result, type(result))
     
 
 

@@ -56,7 +56,22 @@
   	<div id='contents'>
 		<!-- 여행지 -->
 		<div id='tour-recommend'>
-		
+			{% if travel %}
+				<div class = 'row'>
+					<div class = 'col'>
+						{% for tr in travel%}
+							<div class="col-md-4">
+								<div class = 'row'>
+									{{tr.genre3}}
+									{{tr.city}}
+									{{tr.town}}
+									{{tr.site}}
+								</div>
+							</div>
+						{% endfor %}
+					</div>	
+				</div>
+			{% endif %}
 		</div>
 		<div class = 'col-md-4 col-md-offset-4'>
 		</div>
@@ -69,3 +84,5 @@
 </html>	
 
 {% endblock  %}
+
+

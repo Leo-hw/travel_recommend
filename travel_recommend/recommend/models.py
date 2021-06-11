@@ -1,24 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-# Create your models here.
-
-'''
-treview
-treview_no, treview_id, tourid, rating, genre 
-
-tuser
-tuser_no, tuser_id, tuser_occ, 
-tuser_jumin, tuser_gender
-
-travel
-tourid, city, town, name, type1, type2, type3, genre
-
-'''
-#모델을 다시 바꿔야함...
-# 어떻게??
-
-
-
 
 class Travel(models.Model):
     tourid = models.AutoField(primary_key=True)
@@ -38,7 +19,7 @@ class Treview(models.Model):
     user_no = models.ForeignKey('Tuser', models.DO_NOTHING, db_column='user_no', blank=True, null=True)
     placeid = models.ForeignKey(Travel, models.DO_NOTHING, db_column='placeid', blank=True, null=True)
     rating = models.FloatField(blank=True, null=True)
-    review_no = models.AutoField(primary_key=True)
+    treview_no = models.AutoField(primary_key=True)
     udate = models.DateTimeField(blank=True, null=True)
 
     class Meta:
@@ -55,7 +36,6 @@ class Tuser(models.Model):
     class Meta:
         managed = False
         db_table = 'tuser'
-
 
 
 class Usert(models.Model):

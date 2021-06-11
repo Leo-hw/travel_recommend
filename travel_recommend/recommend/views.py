@@ -1,3 +1,6 @@
+from datetime import datetime, timedelta
+
+from pandas.core.arrays import boolean
 from .cal_cf import Cal_Cf
 from .weather import Weather
 from .cal_knn import Cal_Knn
@@ -11,6 +14,7 @@ from django.shortcuts import redirect, render
 from django.views.generic.list import ListView
 import pandas as pd
 import pymysql
+import numpy as np
 
 conn = pymysql.connect(host='127.0.0.1', user='root', password='123',  db='test', charset='utf8')
 curs = conn.cursor()
@@ -206,32 +210,34 @@ def calc(request):
     user_id = request.user.id
     print(user_id)
     
-    print('쁘야호!!!!')
     sql = 'select * from tresult where user_no = %s'
     curs.execute(sql, (user_id,))
     tresult = pd.DataFrame(curs.fetchall(), columns=['user_no', 'placeid', 'udate'])
-    tresult = Tresult.objects.all()
-    for t in tresult:
-        print(t)
+    #tresult = Tresult.objects.all()
+    # print(tresult['udate'], type(tresult))
+    # print(np.max(tresult['udate']))
     
-    # print(tre)
-    trev = Treview.objects.all()
-    print(trev)
-    # print('tresult:', tre, '\t','treview',trev)
+    trev = pd.DataFrame(Treview.objects.filter(user_no = user_id).values())
     
-
-    # udate1 = Tresult.objects.filter(user_no=)
-    # udate2 = Treview.objects.filter(user_no=user_id)
-    # print('udate1:', udate1,  '\t udate2:', udate2)
-    # if udate1 == udate2:
-    #     print('업데이트 필요 x')
-    #     results = Tresult.objects.all()
-    # else:
-    #     results = Cal_Cf(user_id)
-    # print(results)
+    # print(trev, len(trev))
+    # print(np.max(trev['udate']))
     
+    # check updated date
+    udate1 = np.max(tresult['udate'])
+    udate2 = datetime(np.max(trev['udate']))
+    #delta = udate2 - udate1
+    #sla = datetime(udate1) - datetime(udate2)
+    print('udate1: ', udate1, 'udate2: ',udate2, type(udate1), type(udate2))
     
+    #print(udate1.strftime('%Y-%m-%d %H:%M')-udate2.strftime('%Y-%m-%d %H:%M'))
+    #print(datetime(udate1)-datetime(udate2))
+    #udate1.strptime()
     
+    print(udate1-udate2)
+    if datetime(udate1) == datetime(udate2):
+        print('equal')
+    else:
+        print('diff')
     return render(request, 'calc.html')
 '''
 treview
